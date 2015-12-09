@@ -1,0 +1,3 @@
+@echo 正在备份版本库%1……
+@%SVN_HOME%\svnadmin hotcopy %1 %BACKUP_DIRECTORY%\%2
+@echo 版本库%1成功备份到了%2！

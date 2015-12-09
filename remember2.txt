@@ -1,0 +1,819 @@
+hudson上source执行注意：先进入到代码上级目录，再在脚本的上一级执行source命令
+
+cd /home/hudsonworkspace/UniformBootloader_Android
+source Proj/AutoBuild_BL_Hi3796M.sh
+
+BE2010备份软件 http://wenku.baidu.com/link?url=m8JH208bA_BPnwAjExrCixra6O5Z9uReAvm3OM3DagGYVNEgznkZ-P3Uh3fHc9zI8HMSZ0bMyHr0PrUmtt_l5RGcIUpUnzrefbTjgzdK8Pm
+GoodSync文件备份 san存储
+
+git 备份工具hesokuri  https://github.com/google/hesokuri
+
+push origin HEAD:refs/for/master
+
+excel 学习http://www.xuexila.com/excel/biaoge/22248.html
+bat 文件默认设置成记事本打开之后如何恢复：http://www.jb51.net/os/windows/308893.html
+
+date -s 修改时间
+
+一台update过的Windows 2003 访问Samba空间，系统报错“提示无任何网络提供程序接受指定的网络路径”（之前访问或者映射网络驱动器正常）在“运行”下直接输入ip地址，
+\\172.16.31.111\public 依然报错，ping该此IP可以ping通，基本排除网络物理连接故障，其它Windows可以访问Samba空间，说明Samba服务器本身没有问题，
+肯定是Windows服务器本身服务没有起来，检查Windows系统服务发现Workstation、Server、Computer browser这三个服务，支持创建和维护到远程服务器的客户端网络连接的服务异常，
+启动类型是“自动” 启动状态没有任何显示，于是启动了这三个服务，重新连接Samba服务器，连接成功
+
+windows重启命令shutdown -r -t 0
+linux shutdown -h now
+
+工具链中一般都会有内部文件之间软连接的情况，这种跨服务器间用scp拷贝的话软连接属性会被文件夹覆盖，采用先压缩再scp拷贝压缩文件夹之后再解压即可解决
+
+查看服务器型号：dmidecode | grep "Product"
+
+设置gerrit中git仓库继承某个仓库的脚本
+find cm/ -name "*.git" > /home/qiaoting/product.list_git
+a=`cat /home/qiaoting/product.list_git `
+for apk_mdl in $a 
+do
+      ssh ha gerrit set-project-parent $apk_mdl -p amlogic/amlogics802/manifest 
+done 
+
+
+linux 库文件一般在lib下，头文件在include下 /usr/include /usr/local/include /usr/include/sys/ /usr/include/linux/等
+
+svn co $taglable $prj1  > $prjpath/$prj1/makelog 2>&1
+
+查看linux版本信息
+lsb_release -a 
+
+
+linux服务器关机重启之后，如果进程启动之后其他电脑访问不了，则需要关掉防火墙 
+{
+1）重启后生效
+开启： chkconfig iptables on
+关闭： chkconfig iptables off 或者 /sbin/chkconfig --level 2345 iptables off
+
+2) 即时生效，重启后失效
+service 方式
+开启： service iptables start
+关闭： service iptables stop 
+iptables方式查看防火墙状态：
+/etc/init.d/iptables status暂时关闭防火墙：
+/etc/init.d/iptables stop重启iptables:
+/etc/init.d/iptables restart
+}
+
+linux samba之前配置好能用，机器重启之后sanba目录就只能看到文件夹看不到文件，并且没有权限创建文件是因为服务器的seLinux未关闭
+解决方法如下：
+{
+查看SELinux状态：
+1、/usr/sbin/sestatus -v      ##如果SELinux status参数为enabled即为开启状态
+SELinux status:                 enabled
+2、getenforce                 ##也可以用这个命令检查
+关闭SELinux：
+1、临时关闭（不用重启机器）：
+setenforce 0                  ##设置SELinux 成为permissive模式
+setenforce 1                  ## 设置SELinux 成为enforcing模式
+2、修改配置文件需要重启机器：
+修改/etc/selinux/config 文件
+将SELINUX=enforcing改为SELINUX=disabled
+重启机器即可
+
+}
+
+linux计划任务
+系统类周期性任务：/etc/crontab
+用户类周期性任务：/var/spool/cron/USERNAME
+
+
+以前平台事业部的文档管理工具confluence访问路径：http://10.10.5.63:8012/（现在未启动）     备份路径：F:\important\Confluence\backups 
+
+平台事业部整机价目信息系统 10.10.5.63上F:\assembly 备份在F:\assemblybak\Bak\data 不知道还在使用没有
+
+
+mysql忘记用户名密码的操作：
+
+1. 向mysqld server 发送kill命令关掉mysqld server(不是 kill -9),存放进程ID的文件通常在MYSQL的数据库所在的目录中。
+killall -TERM mysqld
+你必须是UNIX的root用户或者是你所运行的SERVER上的同等用户，才能执行这个操作。
+2. 使用`--skip-grant-tables' 参数来启动 mysqld。 (LINUX下/usr/bin/mysqld_safe --skip-grant-tables , windows下c:\mysql\bin\mysqld --skip-grant-tables)
+
+
+
+svnadmin dump 命令只能导整个库的版本，不能只导出某个路径
+
+配置管理之路
+http://www.scmroad.com
+http://bbs.scmlife.com
+
+
+中间件小库生成大库：直接setenv之后再make mmcp（可用来查看中间件编译失败原因）  生成的库文件在lib下，平台目录下面libmmcp_ew510.a类型的是大库 
+ 
+linux查找文件命令
+find / -name mod_proxy.c
+
+
+安装git
+下载压缩包
+tar -jvxf git-1.8.4.tar.bz2
+cd git-1.8.4
+make 
+make install
+
+
+安装samba rpm包
+3、安装Samba 
+用以下命令安装：
+
+		rpm -ivh samba-3.0.33-3.29.el5_6.2.i386.rpm -f --nodeps
+		rpm -ivh samba-client-3.0.33-3.29.el5_6.2.i386.rpm  -f --nodeps
+		rpm -ivh samba-common-3.0.33-3.29.el5_6.2.i386.rpm -f --nodeps
+启动报错缺少库的情况再做软连接到对应的库文件
+
+[bash]
+        comment = /home/ott-admin/bashn
+        path = /home/ott-admin/bash
+        browseable = yes
+        writable = yes
+        valid users = ott-admin
+
+
+
+mount -t nfs -o rw 10.10.96.200:/home/hudson/jobs /home/qiaoting/share_96.200
+
+C语言的编译必须的部分 gcc glibc binutils
+http://blog.csdn.net/djinglan/article/details/8273985
+
+
+测试包路径：
+
+http://10.10.5.63:9999/TestPackagegn
+
+测试包归档：
+2012年 svn://10.10.5.54/TestPackage2012
+2013年 svn://192.168.99.107/TestPackage2013
+2014年 svn://10.10.96.155/TestPackage2014
+
+5.66 root  Coship@RD_175
+10.10.5.183 coship183
+5.63coshipCM110
+
+2014年--2015年1月 这期间的测试包已经归档到下面路径 svn://10.10.96.155/TestPackage2014
+
+光盘引导安装linux 读不到硬盘？？？
+
+发放软件包在package_VSS里面
+
+linux系统介绍以及安装：
+http://wenku.baidu.com/link?url=UZrwdr7fTzRwDHXGvrp1aBSq7Zu0cKiV0WDn1q2X-05vTdbDvhcEAggJUFMDYbR_nqOHezvWW3VpMz0l_bh6L7rS6fthmKEHUpTriNtQuM_
+
+fuser -m -v /dev/sdc1 查看/dev/sdc1是否有进程在使用 
+fuser -km /dev/sdb1 强制杀掉所有使用/dev/sdb1目录的进程。
+svn 启动命令：svnserve -d -r /mpeg/mpeg1/rdsvn/home/rdsvn
+
+samba启动命令：/etc/rc.d/init.d/smb start0o
+
+linux rar安装步骤：
+
+解压 tar -zxvf 之后直接  make 
+
+linux上apache 安装
+下载地址： http://httpd.apache.org/download.cgi
+tar -zxvf httpd-2.2.6.tar.gz
+mv httpd-2.2.6 apache
+cd apache
+./configure --prefix=/usr/local/apache2 --enable-module=so
+make
+make install
+
+已经装好的apache在 /usr/local/apache2
+
+进入apache源码的模块目录进行编译
+
+cd httpd-2.0.63/modules/proxy/
+
+/usr/local/apache2/bin/apxs -c -i -a mod_proxy.c mod_proxy_connect.c mod_proxy_http.c proxy_util.c
+
+从输出里面看到apache的modules目录下已经产生了mod_proxy.so,且已经在httpd.conf中激活了
+
+
+
+启动：/usr/local/apache2/bin/apachectl start
+设置属性：
+Listen 8081
+ServerName localhost:8081
+
+
+
+
+
+
+
+
+10.10.5.80 dev  devtocoship
+
+
+
+
+ubuntu关闭防火墙命令 ufw disable
+ java -jar gerrit-full-2.5.2.war init -d review_site
+/home/coship/reviewsite/bin/gerrit.sh start
+
+命令设置htpasswd：先进入到apache的/bin目录下面，输入htpasswd E:/usr 用户名，然后根据提示输入密码
+net use * /del /y
+
+中间件相关工具链 http://zentao.eastwin.cc/toolchains/   \\192.168.99.18\toolchains
+
+EditPlus中改变文档编码格式的方法： Document -> File Encoding -> Change File Encoding ->选择自己需要的编码格式
+
+svn权限设置文件中有中文的时候，文件必须要采用UTF-8的格式保存，权限设置才会生效
+
+中间件自动构建：
+1、确定平台
+2、上传版本号为0的上次的编译的版本号记录在/home/hudson/lastver/lastver\_$prj\_mmcp.log文件
+3、如果需要编译工程需要给脚本make_mmcp.sh传参数productname 
+4、库的编译都是make clean & make ；（默认全部编译，也可研发提供要编译哪些模块）
+5、注意cfg的路径与编译方法可能会不相同
+
+10.10.96.200 ott-admin 789789
+
+母片包在SwForProduct_Vss上面
+
+1、按ALT+CTRL+F1切换到字符界面（Linux实体机）
+
+     如果是VMware虚拟机安装的Linux系统，则切换到字符界面的时候需要以下操作
+
+     按下ALT+CTRL+SPACE(空格)，ALT+CTRL不松开，再按F1。这样就可以切换到字符界面了。
+
+
+2、按ALT+CTRL+F7切换到图形界面（Linux实体机）
+
+     如果是VMware虚拟机安装的Linux系统，则切换到图形界面的时候需要以下操作
+
+     按下ALT+CTRL+SPACE(空格)，ALT+CTRL不松开，再按F7。这样就可以切换到图形界面了。
+
+ 
+
+    在Linux中一般有ALT+CTRL+F1----F6为字符终端（字符界面），ALT+CTRL+F7为图形界面。不同的发行版本可能有一些差别，但切换方法都是一样的。可以自己试试就可以知道哪些是字符终端，哪些是图形界面。
+
+
+    如果想 Ubuntu 在每次启动到 command prompt ，可以输入以下指令:
+
+    $echo “false” | sudo tee /etc/X11/default-display-manager
+
+    当下次开机时，就会以命令行模式启动（text模式，字符界面登录），如果想变回图形界面启动（X windows启动），可以輸入:
+
+    $echo “/usr/sbin/gdm” | sudo tee /etc/X11/default-display-manager
+
+    如果在Ubuntn以命令行模式启动，在字符终端想回到图形界面的话只需以下命令:
+
+    $startx
+
+
+
+10.10.118.50 coshipCM114 广电事业部禅道服务器 安装路径D盘，备份路径F盘
+
+linux用root创建的文件，有时samba的时候没有写权限，
+首先修改文件拥有者及用户组
+chown [-R] 账号名称:用户组名称 文件或目录
+chown -R xingjiang:xingjiang dir
+然后再chmod
+
+
+使用repo下载代码的时候可能出现fatal: empty ident  <jiangsijun@smarttvserver.(none)> not allowed ，这种情况可能是由于user.name 和user.email 没有配置好
+
+虚拟机存放路径：\\192.168.99.46\share share share
+
+在使用svn的过程中，若使用tortoiseSVN更新或者提交linux samba的内容的时候，提交成功，但是本地的.svn文件报错拒绝访问的，
+有可能是.svn的所属是root，而自己samba的用户没有root的权限造成的
+
+gerrit 设置开发邮箱 登录10.10.5.161 qiaoting 789456 09 liuya@coship.com liuya  (需要使用gerrit的管理账号执行，并且在服务器上配置config文件，
+
+如管理员是liuya则在/home/liuya/.ssh目录下配置config的内容如下：
+Host ha
+   User liuya
+   Port 29418
+   Hostname 10.10.5.184
+   IdentityFile /home/liuya/.ssh/id_rsa
+
+   还需把/home/liuya/.ssh/id_rsa.pub的内容粘贴到网页上认证key
+
+gerrit 设置账号密码  登录10.10.5.66 qiaoting 789456 htpasswd /home/gerrit/review_site/passwords liuya liuya 
+gerrit 设置账户邮箱  ssh ha gerrit set-account --add-email yuanhongqiang@coship.com yuanhongqiang
+
+bootloader构建的时候公司产品型号是bootloaderlinux，测试包名称为标签的后面一截
+
+linux 上面的应用程序即使不需要也没什么影响，svn是版本管理工具，主要用于针对不同的版本进行管理，如果要卸载的话，切换到root权限，执行命令：
+rpm -e   subversion
+如果提示有依赖或者冲突，最好就不要卸载了。当然也可以强制卸载，在上面的命令后面加上参数： --nodeps 即可
+
+
+启动两个svn服务,linux开机自启动方法
+时间：2012-07-09 12:22:04信息来源：TCCMSv8.0 点击：552次 【字体：大 中 小】
+
+1.创建执行脚本svn.sh（/root路径下），其内容很简单，如下：
+#!/bin/bash
+svnserve -d --listen-port 3690 -r /home/svndata
+
+
+2.添加可执行权限
+
+命令行运行	
+chmod ug+x /root/svn.sh
+
+3.添加自动运行
+
+打开（vi或gedit） /etc/rc.d/rc.local ，在最后添加一行内容如下：
+
+/root/svn.sh
+
+保存退出。
+
+4.检查
+
+重启服务器，使用 ps -ef 看看svn进程是否启动了。
+
+
+签字电子流处理：
+把源文件和返回文件都存到一个命名为测试包名称后面加SIG的压缩包中，存放在测试包路径下的sign下面
+
+192.168.99.107   OTTtest
+
+.tar.gz     格式解压为          tar   -zxvf   xx.tar.gz    压缩 tar -zcvf xx.tar.gz ./*
+.tar.bz2   格式解压为          tar   -jxvf    xx.tar.bz2
+
+
+@REM *** getout git_version***** 
+cd/d %SRCPATH%
+call git rev-parse HEAD >> gitversion.txt
+SETLOCAL ENABLEDELAYEDEXPANSION
+
+for /f "tokens=1" %%i in (%SRCPATH%\gitversion.txt) do (
+set b=%%i
+del  gitversion.txt
+)
+
+set gitversion=%b:~0,8%
+
+
+
+windows删除文件夹命令：
+最佳组合：先用del /q/a/f/s d:\temp\*.*删除你temp文件夹里面的所有文件，然后再用rd /s d:\temp\删除你temp文件夹下目录以及子目录
+
+del /q/a/f/s src\*.* 
+rd /s src\
+
+
+1、查看windows指定端口占用
+C:\>netstat -aon|findstr "9050"
+  协议    本地地址                     外部地址               状态                   PID
+  TCP    127.0.0.1:9050         0.0.0.0:0              LISTENING       2016
+P: 看到了吗，端口被进程号为2016的进程占用，继续执行下面命令： （也可以去任务管理器中查看pid对应的进程）
+2.查看PID对应的进程
+C:\>tasklist|findstr "2016"
+ 映像名称                       PID 会话名              会话#       内存使用
+ ========================= ======== ================
+  tor.exe                     2016 Console                 0     16,064 K
+P:很清楚吧，tor占用了你的端口。
+3.结束该进程
+C:\>taskkill /f /t /im tor.exe
+
+
+
+scp root@192.168.20.20:/root/1.txt  /home                          /*拷贝1.txt文件到本机home目录下*/
+scp -P 2200 root@192.168.20.20:/root/1.txt /home              /*端口非默认，用-P+端口号表示*/
+scp -r root@192.168.20.20:/root/* /home                            /*拷贝/root下所有文件到本机home下*/
+
+
+repo仓库目录结构修改之后需要
+1. 仿照下面修改方法，修改仓库路径
+cd cm-10.1-coship/.repo/manifests
+git remote set-url origin ssh://10.10.5.66:29418/cm/CyanogenMod/android
+git pull
+
+2. 进入repo根目录，更新代码
+cd cm-10.1-coship
+repo sync
+
+获取svn 版本号的打包名称
+cd /home/hudson/$prj
+filename=$prj\_svn.`sed -n 11p .svn/entries `_`date "+%Y%m%d%H%M%S"`
+echo $filename
+
+
+工厂母片包存放vss的sw库，研发的存在package库
+
+git支持中文的版本来了，尽快升级一下，再也不用因为源码包含中文命名文件而烦恼了，密钥不需要重新生成的噢，切记！
+
+TortoiseGit：
+
+	32位机器：\\10.10.5.26\b2c\14.开发工具\git\TortoisGit_32bit
+	64位机器：\\10.10.5.26\b2c\14.开发工具\git\TortoisGit_64bit
+
+	均参照里面的安装说明进行操作即可：
+
+EclipseGit：
+
+如果你本机Eclipse或是MyEclipse不支持中文，那么，请执行以下PPT内的EclipseGit安装
+章节：
+\\10.10.5.26\b2c\04.培训资料\06.工具类\git\git系列培训\FAQ\平台开发部\配置管理工具之GIT培训_EclipseGit.ppt  
+
+
+win下编译内容，如已经切换git的模块，请修改5.166上自动构建调用的脚本
+
+原来调用的call D:\bash\build_package_apk.bat 请改为call D:\bash\build_package_apk_git.bat 
+原来调用的call D:\bash\build_package_pom.bat，请改为call D:\bash\build_package_pom_git.bat
+原来调用的build_package_scv_cdn.bat，请改为：build_package_scv_cdn_git.bat
+
+
+
+\\192.168.99.101\conf_svn svn文档库权限文件
+\\10.10.5.26\数字家庭产品线
+\\10.10.5.26\视讯终端产品线
+
+当windows服务器上装了某个程序之后，只能本地访问的话，是由于防火墙阻止了的原因，在防火墙的高级设置里面，在入站规则那个地方新加一个规则，把该程序加进去就可以在别的机器上访问了。2013.12.18
+
+Coship@RD_133
+10.10.5.161 ott-admin Coship@RD_136
+
+at 22:30 shutdown -s 
+shutdowm -a
+
+linux系统相关：
+
+find  dir  -name .svn    | xargs rm  -Rf
+
+解压命令：tar zxvf FileName.tar.gz
+
+设置字符集：在/etc/environment中设置LANG=en_US.UTF-8 ?
+
+
+在windows上配置了Apache之后如果服务起不来，多半是修改的http.conf那个文件的问题
+
+修改windows的用户名密码：
+我的电脑右键，管理
+用户和组
+用户
+ADMINISTRATOR右键修改密码
+
+修改environment 之后，执行 source /etc/environment  立即生效！
+
+添加用户：useradd liuya 
+修改密码：passwd liuya
+
+添加samba用户：smbpasswd -a liuya 之后配置smb.conf文件
+
+关闭防火墙：ufw disable 
+
+ubuntu 重启命令：shutdown -h now  //  sudo reboot 
+       关机命令：shutdown -r now
+
+设置网络:
+
+vi /etc/network/interfaces
+auto lo
+iface lo inet loopback
+auto eth1
+iface eth1 inet dhcp
+
+重启网卡：
+/etc/init.d/networking restart 
+
+新安装完了ubuntu之后，需要执行sudo apt-get update 更新软件源
+
+查看linux是多少位的命令：getconf LONG_BIT
+
+df -hl查看服务器剩余空间大小
+du -sh 6a801-BD 查看大小
+hudson liuya905408
+
+
+ubuntu乱码解决：export LANG=en_US.UTF-8
+
+git相关：
+git的用户名liuya,密码：786asd
+ 飞看开权限命令：htpasswd /home/gerrit/review_site/passwords  qiaoting1
+
+tortoisegit下载地址：http://code.google.com/p/tortoisegit/downloads/list
+msysgit下载：http://code.google.com/p/msysgit/downloads/list
+
+
+vss相关：
+
+vss上的tag在工程目录的show history 里面
+
+VSS手动get代码的时候要在前面三个选项上打钩
+
+Package_vss只有测试部的人才开放写的权限
+
+vss有被别人check out 后未check in 的代码时，需要使用该用户账号undo check 
+
+
+svn相关：
+
+svn import lmc svn://192.168.99.107/EngineProduct/01.APP/BCM7435 --no-ignore -m "import" 
+
+svn冲突后，点revert还原之后的版本是版本库上最新的版本，本地修改已经被覆盖
+
+svn checkout的时候可以用svn co -N dir 只checkout当前目录文件，不包括子目录，TortoiseSVN也可以选择  此后子目录下的代码可用svn up -r 版本号 dir 下载相应版本的文件
+
+当svn查看日志的时候出现异常，refresh一下或者是删除log的缓存文件
+
+用apache加svn与单独svn的区别是前者以http的形式访问，可以在浏览器中访问
+   
+   
+10.10.98.148归档库
+
+linux上安装svn服务器端命令：
+rpm -e subversion-1.5.5
+tar -xvf subversion-1.5.5.tar.bz2
+tar -xvf subversion-deps-1.5.5.tar.bz2
+cd subversion-1.5.5
+./configure
+Make
+make install
+
+创建svn库
+mkdir /home/svn
+svnadmin create /home/svn/davesvn
+修改conf下配置文件
+启动服务
+svnserve -d -r /home/svn
+
+svn分支删除之后可直接再在父级目录showlog之后选择要恢复的分支版本创建同名的分支即可
+
+有时用windows下载svn代码的时候会报错，找不到指定的文件，有可能是因为要下载的文件目录中有两个文件名是相同的（只是大小写的区分），
+这样由于windows是不分大小写的，所以就会报错；只能在linux中用命令下载。
+
+svn建立外部链接：右键需要建立链接的上级目录->show properties->new->
+(Property name)svn:externals,
+(Property value)  类似： tvos svn://192.168.99.107/advanced_research/SmartTV/trunk/mstar/6a801/Supernova/projects/tvos
+
+svn co 可以co 到一个已经存在的目录，而export不行，用svn export svn://192.168.99.107/headend/CAM6730/tags/CAM6730_S1.2.0.4_B1.1.4_20130906 CAM6730 ,
+其中CAM6730是一个已经存在的目录，会报错CAM6730已经存在，而用svn co不会报错
+
+使用svn下载代码的时候，若是子集目录，必须要新建一个该文件名到该目录下面，再下载代码到该目录 2013.09.10
+
+svn import 的时候加入参数 --no-ignore 
+
+http://tortoisesvn.net/
+
+安装tortoisesvn汉化包的时候，首先要确定选择匹配的版本；如果安装完成之后，
+语言下拉选项里面没有出现简体中文选项的，先到安装路径下删除languages包再重新安装一次汉化包。
+
+http://subversion.apache.org/news.html
+
+由于windows不区分大小写，所以在用命令上传svn代码的时候，最好使用linux，否则可能会出错
+
+svn库代码版本还原问题：首先把代码的最新版本checkout到本地，然后右键显示版本日志，并且选中想要恢复的版本，右键选择还原到该版本提交即可
+
+问题：svn在commit时提示如下：
+服务器发送了意外的返回值(500 Internal Server Error)，在响应 “POST” 的请求 “/svn/DOC/!svn/me” 中
+问题原因是服务器的硬盘空间不足了
+
+服务器上搭建svn+apache http://wenku.baidu.com/view/46bfe07927284b73f242509f.html
+
+在创建svn库的时候，登录到库上时，如果出现类似“错误的格式4，应该在格式1与格式3”这样的错误是由于创建svn库的时候可能用的是tortoiseSvn创建的，
+但是该tortoiseSvn与subversion的版本不匹配所以会出现这样的错误。删除该库，重新用命令创建或者安装与subversion相匹配的tortoiseSvn再创建新的库。
+
+
+编译相关：
+
+使用服务器搭建自动构建的时候，在之前可用某个账号（比如svn配置库账号）在该服务器上下载代码之后记住该账号，自动构建下载代码就会默认用该账号。
+
+袁方的WM3600软件编译:10.10.101.153 coship coship  下载完代码之后，直接在根目录调用96D-bin-all.sh，生成的软件在image下面，必须有flash.img，如果没有就重新编译一次就可以了
+
+
+
+自动编译查看日志信息，linux服务器：\\10.10.5.80\luntbuild\linux
+
+编译脚本访问\\192.168.99.25\e$  对应 E:\DVB\bat\compile_bat\product_type.txt
+
+手动编译步骤：
+1.确定项目对应的编译类型（可查看D盘的公司产品型号一览表.xls以及 192.168.99.25上的E:\DVB\bat\compile_bat\product_type.txt获得）；
+2.192.168.99.25网页上查看对应类型调用的编译脚本；
+3.根据编译脚本的步骤进行手动下载代码、编译；
+4.取相应路径下的BootLoader包，与编译完成之后生成的文件一起压缩成测试包名称；
+5.上传测试包到测试包路径下。
+
+luntbuild默认设置的不在其他服务器上编译的软件是在windows192.168.99.25上编译。
+
+代码路径下如果存在test_rs232文件的需要手动编译，不能提交自动编译及mis系统编译（现在已经可以了，公司产品型号使用N7300svn）。
+
+N9201usp类型只需要调Automake.bat 
+
+N7700编译脚本：
+cd HI3110E
+. setenv.env
+make clean
+make
+./mk_fsimg.sh
+
+然后到test_rs232下双击mkImage.bat即可  
+生成的文件在release里面 N7300svn
+
+
+hmc2.0统一编译准则
+1）	cd  product/xxxxx
+2）	. setupenv
+3）	make clean
+4）	make bin
+生成的文件在product/xxxxx/release/9_bin/*app*.bin 及product/xxxxx/release/9_bin/*app*.img
+同时生成所有测试部需要的文件夹product/xxxxx/release2test/
+襄樊不同的是生成的只有app.bin存放置product/xxxxx/release/4_app即此为判断条件
+
+自动编译失败原因分析，主要有以下几点：
+1，代码真的编译不过。
+2，应用人员更新了工具链，但是没有提前知会我们更新服务器上的工具链
+3，filelist检查表和实际需要提交给测试的测试包里面内容不符
+4，应用人员提交的自动编译，编译系统编译完成后，Notes系统收不到返回值，所以就没有给提交人发反馈邮件，
+从而引起自动编译系统上的编译状态无法改变，一直在“编译中”的状态
+   这样的后果只能以下方式处理
+   A，如果编译结果是成功，则需要提交人员把流程提交给配置管理员，配置管理员在手工过一下流程，提交给测试
+   B,如果编译结果是失败，则只能提交给配置管理员手工编译
+5，编译正常完成，也收到反馈邮件，出现下面异常
+   应用人员没有提交测试，而是有继续修改代码，后续再重新打标签，重新提交测试，这种情况也无法使用自动编译系统，只能配置管理员手工编译
+   应用人员直接提交测试，但是测试人员发现盒子无法启动或者存在其他严重的问题，立马就把流程退回给应用人员， 这种情况，
+   修改完成代码后，在提交测试的时候，将无法提交自动编译，只能人员编译，提交测试。
+6，测试人员测试完毕后，走错流程，原路打回，这种情况后续也无法提交自动编译。
+7，缺文档，如自测试报告，releaseNotes,需求文档，版本号有误，CA，驱动库路径没有填写
+   测试人员退回的单很多也需要配置人员手工过流程。
+8，luntbuild系统本身的问题，如后台无法删除文件，空间不足，软件崩溃等异常
+9，其他，如没有打评审标签就提交测试，测试单中自动构建需要的栏，没有填写不规范，或者填写错误。
+
+编译之后打包前生成的临时文件路径\\192.168.99.25\e$\DVB\DATA\Tmp_Data
+
+软件编译状态需要在电子流主单以及测试电子流编译情况查询的地方查询。
+
+楚天金纬广电代码编译步骤：windows 1、双击setenv.bat 2、gmake clean 3、gmake 生成的文件在test下面
+
+
+Cruisecontrol相关：
+
+10.10.5.174服务器是跟国际一起的自动构建服务器，用户名：weijiang 密码：905171
+
+cruisecontrol安装以及启动
+cd /opt
+unzip cruisecontrol-bin-2.8.zip
+cd  /opt/cruisecontrol-bin-2.8/
+sh cruisecontrol.sh               //启动服务
+在搭建软件的自动构建的时候，注意创建好配置文件中所需的各个目录文件，以及把编译脚本放到相应的位置下，
+并且从配置库中获取代码（check out from svn）
+启动之后访问路径类似：http://10.10.102.159:8080/dashboard/tab/builds
+
+\\192.168.99.102\share_6a801\查看自动构建日志
+http://10.10.5.174:8080/dashboard/tab/builds
+http://10.10.98.139:8080/dashboard/tab/builds
+
+自动构建出来的软件共享路径：\\192.168.99.102\share_6a801\Mstar6A801-BD\
+cruisecontrol自动构建查看日志在cruisecontrol-bin-2.8下面的cruisecontrol.log
+
+其他：
+
+win7显示文件后缀名：进入一个盘，组织--文件夹和搜索选项--查看--隐藏/显示已知文件类型扩展名
+
+离职权限删除包括svn、vss以及文档服务器
+
+\\192.168.99.123\12-配置管理  学习参考资料
+
+svn路径存放文档、bootloader、测试包：http://192.168.99.101:9999/TestPackage/  (不用开权限，默认都有读的权限) 写权限：liuya 123456
+
+\\192.168.99.123\01部门管理\03_综合管理部\03_运作管理部\1_部门管理\1.5_小组空间\1.5.2_配置管理\05_工具及其维护\工具使用指南\Luntbuild
+
+Win7不能运行bat，双击之后就打开编辑了的解决方法：
+
+开始，输入regedit，回车，打开注册表编辑器。
+找到：
+HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionExplorerFileExts.BAT 删除下面看起来不太顺眼的东西
+
+777权限r=4,w=2,x=1
+
+\\192.168.99.123\01部门管理\03_综合管理部\03_运作管理部\1_部门管理\1.5_小组空间\1.5.2_配置管理\02_培训学习\对外
+
+
+2013.10.18：
+mxh7000？
+06:00:26: maxiuhong: \\192.168.99.101\conf_svn
+06:00:32: maxiuhong: \\192.168.99.107\905390
+06:01:05: maxiuhong: \\192.168.99.101\conf_svn\access
+06:04:54: maxiuhong: svn://10.10.5.54/TestPackage2012/01_GUI_USP/CDVBC5820TE
+svn://10.10.5.54/TestPackage
+http://192.168.99.101:9999/TestPackage
+
+\\192.168.99.46\porting_guonei      porting  porting2013
+
+06:06:24: maxiuhong: \\192.168.99.101\Package_vss\package_first   101上的部分旧的数据已转移到10.10.96.150上  win
+
+mis系统查询订单信息步骤：订单管理-》订单工作信息-》订单基本信息-》订单综合查询，选择产品、客户等等。
+
+
+禅道相关：
+
+本篇文章讲述如何通过源代码来升级禅道，适用于各种安装方式。
+
+    在我们网站下载最新版本的源码包，以.zip结尾。
+    解压缩最新的程序，覆盖到原来的目录。比如之前禅道安装的目录是在c:\www\zentao下面，则将代码覆盖到c:\www\zentao，注意，不要拷贝成c:\www\zentao\zentao
+    执行升级程序。假设禅道的访问路径是http://192.168.1.99/zentao/，升级路径为http://192.168.1.99/zentao/upgrade.php。
+    执行升级之前，系统会让你在 zentao/www/下面创建一个ok文件，已确认您对服务器有操作权限，按照系统提示进行即可。
+    根据向导，选择对应的版本，按照提示进行即可。
+    不要将原来的程序移走，再解压缩新的版本，注意是覆盖！
+
+禅道根据页面查找代码参考：
+
+http://www.oschina.net/question/593425_65590
+
+
+gerrit启动的时候设置java内存：
+export JAVA_OPTIONS='-Xms128M -Xmx1024M'
+
+
+nfs mount的时候需要修改 /etc/exports文件 之后exportfs -rf
+需要开机自动mount，编辑 /etc/fstab
+
+使用nexus搭建maven私服
+http://www.cnblogs.com/quanyongan/archive/2013/04/24/3037589.html
+
+
+
+
+
+
+
+
+构建服务器：
+
+
+
+http://10.10.5.89:8080/hudson-2.2.0 
+（启动路径/opt/apache-tomcat-7.0.30这个路径下的，
+mount 10.10.5.183:/3pardata/jobs589 /home/ott-admin/hudson/newjobs  
+mount 10.10.5.183:/3pardata/jobs200    /home/ott-admin/hudson/job_99200
+） 
+多屏互动新CBB amlogic的mmcp cm hisi3796m  amlogic_OTTDVB相关 5.176的中间件重新搭建在这个上面  
+
+http://10.10.96.200:8080/hudson-2.2.0
+（启动路径/opt/hudson/apache-tomcat-7.0.30 
+mount 10.10.5.183:/3pardata/jobs200   /home/hudson/newjobs   
+mount  10.10.5.183:/3pardata/mmcp_publish  /hudson16/mmcp_publish
+mount 10.10.5.183:/3pardata/jobs589   /home/ott-admin/jobs589 
+)
+DVBOTT合并版 集成产品 porting mstar6a801 hi3716c_V200 hisi3796C   是由ott-admin启动的hudson 以前192.168.99.16上面的中间件
+
+
+
+http://10.10.96.171:8080/hudson-2.2.0/view/stb/  （W盘映射的是\\10.10.5.161\wanghuanhuan）现在用的有apk bootloader  
+
+http://10.10.5.161:8080/hudson-2.2.0/  
+
+http://10.10.5.166:8080/hudson-2.2.0/   
+
+
+
+
+
+自动编译网站
+http://10.10.5.54/luntbuild-1.2.2/app.do
+
+用户名、密码：luntbuild luntbuildcm110
+
+
+
+
+10.10.5.163  用户名：qiaoting  密码：456123 用户名：root  密码：coship
+10.10.5.163 samba  用户名：qiaoting  密码：123456  samba  用户名：wanghuimin 密码：789123456
+10.10.5.184 root 123456789 性能好空间小
+10.10.5.161    用户名：ott-admin    密码：Coship@RD_136 
+192.168.99.171  administrator  Coship7000？
+10.10.96.172   root  coship   ott-admin 789456  samba ott-admin 789456456
+10.10.96.177   root  coship177   ott-admin 789123 samba ott-admin 789456456
+10.10.5.176   coship 123456  samba 一样
+10.10.118.50  C904761L(本机) Administrator  Coship2015
+10.10.118.4 root 123456
+10.10.118.46 windows 
+10.10.5.63 CSDATA0508\Administrator coshipCM110
+192.168.99.18 签名服务器 root coshipsign    www signuser
+
+签名脚本：
+echo ============== 1.upload zip:$FILENAME ====================
+curl -T $FILENAME http://192.168.99.18:8086/upload/
+
+echo ============ 2.signapk ==============
+ssh www@192.168.99.18 'sh /home/www/nginx/sign.sh update.zip'
+
+echo ============== 3.download zip:sign_$FILENAME ====================
+curl -o sign_$FILENAME http://192.168.99.18:8086/upload/sign_$FILENAME 
+curl -o sign_update.zip http://192.168.99.18:8086/upload/sign_update.zip
+
+
+
+
+
+
+
+10.10.5.183    用户：root 密码：coshipszjt  用户：qiaoting 密码：cmoszjt
+
+10.10.5.66    用户名：root    密码：coship66ptsy   用户名：qiaoting   密码：cmoptsy 
+
+新192.168.99.107  用户：root 密码：coship110  svnadmin svnadmin
+
+10.10.96.200  ott-admin  cmo200bianyi
+
+10.10.5.89   ott-admin  cmo589bianyi   samba 用户名：ott-admin 密码：cmo589
+192.168.99.213 root coship nexus用户admin admin123 配置 deployment coship

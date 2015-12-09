@@ -1,0 +1,98 @@
+gerrit服务搭建参考地址 : http://blog.csdn.net/benkaoya/article/details/8680886
+重要环节：
+1、安装git
+下载压缩包
+tar -jvxf git-1.8.4.tar.bz2
+cd git-1.8.4
+#make 
+#make install
+make prefix=/usr/local all       //编译Git源代码
+make prefix=/usr/local install  
+如果没有“prefix=/usr/local all ”代码，则当Git安装完成后，只有当前用户（在此为root）才能使用“git”命令，
+若用其他用户（比如oracle用户）使用“git”命令时，则会出现错误：can not find command: git。
+
+2、安装gerrit
+
+java -jar gerrit.war init -d /home/gerrit/gerrit-site
+选择http认证，其他默认y
+
+3、安装apache
+下载地址： http://httpd.apache.org/download.cgi
+tar -zxvf httpd-2.2.6.tar.gz
+mv httpd-2.2.6 apache
+cd apache
+./configure --prefix=/usr/local/apache2 --enable-module=so
+make
+make install
+
+已经装好的apache在 /usr/local/apache2
+
+进入apache源码的模块目录进行编译
+
+cd httpd-2.0.63/modules/proxy/
+
+/usr/local/apache2/bin/apxs -c -i -a mod_proxy.c mod_proxy_connect.c mod_proxy_http.c proxy_util.c
+
+从输出里面看到apache的modules目录下已经产生了mod_proxy.so,且已经在httpd.conf中激活了
+
+如果htpasswd命令用不了，直接把/usr/local/apache2/bin/htpasswd 拷贝到 /bin 目录下就可以了
+
+4、配置http.conf和gerrit.conf
+注意他们俩ip和端口号的对应，配置通过密码文件http认证网页的方式
+注意/home/gerrit/目录下所有文件属主都为gerrit用户，否则登录会报错
+启动：
+/usr/local/apache2/bin/apachectl start
+/home/gerrit/gerrit-site/bin/gerrit.sh start 
+登录网页第一个用户为管理员
+
+5、采用ssh ha gerrit set-account --add-email 的方式设置用户邮箱的方式配置
+ssh ha gerrit set-account --add-email liuya@coship.com liuya  
+需要使用gerrit的管理账号执行，并且在服务器上配置config文件，
+
+如管理员是liuya则在/home/liuya/.ssh目录下配置config的内容如下：
+Host ha
+   User liuya
+   Port 29418
+   Hostname 10.10.5.184
+   IdentityFile /home/liuya/.ssh/id_rsa
+
+   还需把/home/liuya/.ssh/id_rsa.pub的内容粘贴到liuya账户的网页上认证key
+
+6、数据库操作 
+停掉gerrit的服务用以下命令可以进去数据库
+java -jar /home/gerrit/gerrit-site/bin/gerrit.war gsq
+
+完成把旧的gerrit服务器上的数据向新gerrit服务器迁移的功能
+1)如果都是用的H2数据库，可以直接拷贝数据库文件db/ReviewDB.h2.db过去
+2)如果是采用不同类型的数据库，则需要数据迁移。目前不知道h2数据库的数据迁移是否有好的方法。
+
+
+
+7、使用篇
+
+服务端：
+1、删掉密码文件里的gerrit用户之后该用户还是有原来的下载、上传代码等的权限，只是不能登录gerrit网页而已，需要在网页或数据库删除权限才行
+2、下载repo代码 git://codeaurora.org/tools/repo.git，创建repo工程，repo工程上传的时候repo目录下脚本需要有执行的权限，并创建stable分支；
+服务器上配置repo的时候，REPO_URL指向自己服务器上的repo工程，如REPO_URL = 'ssh://10.10.5.184:29418/repo'。
+3、采用repo管理的工程，xml配置文件里面 <project  path="test/test1" name="test1" />  前面path是自己指定下载代码的路径，后面name必须是git库对应的名称。
+4、采用http模式下载代码的用户密码需要在网页个人设置那个地方设置
+
+用户：
+查看《git使用.txt》和《git使用宝典》
+
+
+
+
+
+
+10.10.5.66gerrit过几天就会出现内存溢出，需要重启？？?
+
+
+
+本地创建git仓库：
+参考http://blog.csdn.net/junmuzi/article/details/8128618
+
+3.在本地仓库添加一个远程仓库,并将本地的master分支跟踪到远程分支
+
+1 junmuzi@mybox /git/test_git $ git remote add origin liuya@10.10.5.184:/home/liuya/testgit/.git
+2 junmuzi@mybox /git/test_git $ git push origin master

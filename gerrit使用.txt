@@ -1,0 +1,5 @@
+gerrit使用 
+
+git仓库的写权限和gerrit网页上的审核权限是可以控制到分支的，但是读权限不行，读权限只能针对整个git库
+研发人员针对refs/for/*需要push和Label Code-Review的权限，审核人员需要push和Label Code-Review并且需要submit的权限才能审核之后把代码合并到中央仓库
+对于refs/heads/*审核人员只需要Abandon、Label Code-Review和submit权限就可以了，不要设置push权限，不然会有直接push到中央仓库的权限
