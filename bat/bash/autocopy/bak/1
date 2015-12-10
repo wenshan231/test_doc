@@ -1,0 +1,209 @@
+
+D:\bash\autocopy\bak>锘縠cho off 
+
+D:\bash\autocopy\bak>echo 		****************************************************** 
+		******************************************************
+
+D:\bash\autocopy\bak>echo 		          autocopy all package from auto make path or svn path 
+		          autocopy all package from auto make path or svn path
+
+D:\bash\autocopy\bak>echo 		         Written by qiaoting on 2013.05.08 
+		         Written by qiaoting on 2013.05.08
+
+D:\bash\autocopy\bak>echo 		****************************************************** 
+		******************************************************
+
+D:\bash\autocopy\bak>rem parameter 
+
+D:\bash\autocopy\bak>rem  
+
+D:\bash\autocopy\bak>rem  
+
+D:\bash\autocopy\bak>set svn_dir_path=svn://10.10.5.66/B2C_TestRelease/Test/SCV500 
+
+D:\bash\autocopy\bak>set product_version=SCV500R001B02i 
+
+D:\bash\autocopy\bak>set mdl1_path=svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02/SCV500R001B023/ADIAdapter_V500R001B01_svn.2774_20130513154813.zip 
+
+D:\bash\autocopy\bak>set mdl2_path=\\10.10.5.161\share_windows\SCV500_IEPGM\builds\2013-08-08_18-06-00\archive\output 
+
+D:\bash\autocopy\bak>set mdl3_path=svn://10.10.5.66/B2C_TestRelease/doc/SCV500/SCV500R001B02/SCV500R001B026/doc 
+
+D:\bash\autocopy\bak>D:
+
+D:\bash\autocopy\bak>set ip1_address=10.10.5.161 
+
+D:\bash\autocopy\bak>REM set ip2_address=10.10.5.166 
+
+D:\bash\autocopy\bak>set svn_path=10.10.5.66 
+
+D:\bash\autocopy\bak>rem mkdir test\SCV500R001B02i 
+
+D:\bash\autocopy\bak>rem svn import  test\SCV500R001B02i svn://10.10.5.66/B2C_TestRelease/Test/SCV500  -m "SCV500R001B02i test"  
+
+D:\bash\autocopy\bak>rem if errorlevel 1 goto err_version 
+
+D:\bash\autocopy\bak>svn list svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02i 
+
+D:\bash\autocopy\bak>if 1 EQU 0 goto err_version 
+
+D:\bash\autocopy\bak>svn  mkdir svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02i -m "SCV500R001B02i" 
+
+提交后的版本为 701。
+
+D:\bash\autocopy\bak>set mdl_all=svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02/SCV500R001B023/ADIAdapter_V500R001B01_svn.2774_20130513154813.zip \\10.10.5.161\share_windows\SCV500_IEPGM\builds\2013-08-08_18-06-00\archive\output svn://10.10.5.66/B2C_TestRelease/doc/SCV500/SCV500R001B02/SCV500R001B026/doc 
+
+D:\bash\autocopy\bak>echo svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02/SCV500R001B023/ADIAdapter_V500R001B01_svn.2774_20130513154813.zip \\10.10.5.161\share_windows\SCV500_IEPGM\builds\2013-08-08_18-06-00\archive\output svn://10.10.5.66/B2C_TestRelease/doc/SCV500/SCV500R001B02/SCV500R001B026/doc 
+svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02/SCV500R001B023/ADIAdapter_V500R001B01_svn.2774_20130513154813.zip \\10.10.5.161\share_windows\SCV500_IEPGM\builds\2013-08-08_18-06-00\archive\output svn://10.10.5.66/B2C_TestRelease/doc/SCV500/SCV500R001B02/SCV500R001B026/doc
+
+D:\bash\autocopy\bak>echo svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02/SCV500R001B023/ADIAdapter_V500R001B01_svn.2774_20130513154813.zip \\10.10.5.161\share_windows\SCV500_IEPGM\builds\2013-08-08_18-06-00\archive\output svn://10.10.5.66/B2C_TestRelease/doc/SCV500/SCV500R001B02/SCV500R001B026/doc 
+svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02/SCV500R001B023/ADIAdapter_V500R001B01_svn.2774_20130513154813.zip \\10.10.5.161\share_windows\SCV500_IEPGM\builds\2013-08-08_18-06-00\archive\output svn://10.10.5.66/B2C_TestRelease/doc/SCV500/SCV500R001B02/SCV500R001B026/doc
+
+D:\bash\autocopy\bak>echo svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02/SCV500R001B023/ADIAdapter_V500R001B01_svn.2774_20130513154813.zip \\10.10.5.161\share_windows\SCV500_IEPGM\builds\2013-08-08_18-06-00\archive\output svn://10.10.5.66/B2C_TestRelease/doc/SCV500/SCV500R001B02/SCV500R001B026/doc 
+svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02/SCV500R001B023/ADIAdapter_V500R001B01_svn.2774_20130513154813.zip \\10.10.5.161\share_windows\SCV500_IEPGM\builds\2013-08-08_18-06-00\archive\output svn://10.10.5.66/B2C_TestRelease/doc/SCV500/SCV500R001B02/SCV500R001B026/doc
+
+D:\bash\autocopy\bak>echo svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02/SCV500R001B023/ADIAdapter_V500R001B01_svn.2774_20130513154813.zip \\10.10.5.161\share_windows\SCV500_IEPGM\builds\2013-08-08_18-06-00\archive\output svn://10.10.5.66/B2C_TestRelease/doc/SCV500/SCV500R001B02/SCV500R001B026/doc 
+svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02/SCV500R001B023/ADIAdapter_V500R001B01_svn.2774_20130513154813.zip \\10.10.5.161\share_windows\SCV500_IEPGM\builds\2013-08-08_18-06-00\archive\output svn://10.10.5.66/B2C_TestRelease/doc/SCV500/SCV500R001B02/SCV500R001B026/doc
+
+D:\bash\autocopy\bak>setlocal enabledelayedexpansion 
+
+D:\bash\autocopy\bak>for %a in (svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02/SCV500R001B023/ADIAdapter_V500R001B01_svn.2774_20130513154813.zip \\10.10.5.161\share_windows\SCV500_IEPGM\builds\2013-08-08_18-06-00\archive\output svn://10.10.5.66/B2C_TestRelease/doc/SCV500/SCV500R001B02/SCV500R001B026/doc) do (
+echo %a  
+ echo !ERRORLEVEL!  
+ echo "%a"   | findstr /m/i "10.10.5.161  10.10.5.165 10.10.5.66"  
+ IF !ERRORLEVEL! == 1 goto err  
+ echo "%a"   | findstr /m/i "10.10.5.161 10.10.5.165 "  
+ IF !ERRORLEVEL! == 0 (
+echo "%a"  
+ echo hello  
+ if not exist %a (echo [error] %a not exit pls check   && exit 1 ) 
+)  else (
+svn list %a  
+ IF !ERRORLEVEL! == 1 (echo [error] %a not exit pls check   && exit 1 ) 
+) 
+) 
+
+D:\bash\autocopy\bak>(
+echo svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02/SCV500R001B023/ADIAdapter_V500R001B01_svn.2774_20130513154813.zip  
+ echo !ERRORLEVEL!  
+ echo "svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02/SCV500R001B023/ADIAdapter_V500R001B01_svn.2774_20130513154813.zip"   | findstr /m/i "10.10.5.161  10.10.5.165 10.10.5.66"  
+ IF !ERRORLEVEL! == 1 goto err  
+ echo "svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02/SCV500R001B023/ADIAdapter_V500R001B01_svn.2774_20130513154813.zip"   | findstr /m/i "10.10.5.161 10.10.5.165 "  
+ IF !ERRORLEVEL! == 0 (
+echo "svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02/SCV500R001B023/ADIAdapter_V500R001B01_svn.2774_20130513154813.zip"  
+ echo hello  
+ if not exist svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02/SCV500R001B023/ADIAdapter_V500R001B01_svn.2774_20130513154813.zip (echo [error] svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02/SCV500R001B023/ADIAdapter_V500R001B01_svn.2774_20130513154813.zip not exit pls check   && exit 1 ) 
+)  else (
+svn list svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02/SCV500R001B023/ADIAdapter_V500R001B01_svn.2774_20130513154813.zip  
+ IF !ERRORLEVEL! == 1 (echo [error] svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02/SCV500R001B023/ADIAdapter_V500R001B01_svn.2774_20130513154813.zip not exit pls check   && exit 1 ) 
+) 
+) 
+svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02/SCV500R001B023/ADIAdapter_V500R001B01_svn.2774_20130513154813.zip
+0
+"svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02/SCV500R001B023/ADIAdapter_V500R001B01_svn.2774_20130513154813.zip" 
+ADIAdapter_V500R001B01_svn.2774_20130513154813.zip
+
+D:\bash\autocopy\bak>(
+echo \\10.10.5.161\share_windows\SCV500_IEPGM\builds\2013-08-08_18-06-00\archive\output  
+ echo !ERRORLEVEL!  
+ echo "\\10.10.5.161\share_windows\SCV500_IEPGM\builds\2013-08-08_18-06-00\archive\output"   | findstr /m/i "10.10.5.161  10.10.5.165 10.10.5.66"  
+ IF !ERRORLEVEL! == 1 goto err  
+ echo "\\10.10.5.161\share_windows\SCV500_IEPGM\builds\2013-08-08_18-06-00\archive\output"   | findstr /m/i "10.10.5.161 10.10.5.165 "  
+ IF !ERRORLEVEL! == 0 (
+echo "\\10.10.5.161\share_windows\SCV500_IEPGM\builds\2013-08-08_18-06-00\archive\output"  
+ echo hello  
+ if not exist \\10.10.5.161\share_windows\SCV500_IEPGM\builds\2013-08-08_18-06-00\archive\output (echo [error] \\10.10.5.161\share_windows\SCV500_IEPGM\builds\2013-08-08_18-06-00\archive\output not exit pls check   && exit 1 ) 
+)  else (
+svn list \\10.10.5.161\share_windows\SCV500_IEPGM\builds\2013-08-08_18-06-00\archive\output  
+ IF !ERRORLEVEL! == 1 (echo [error] \\10.10.5.161\share_windows\SCV500_IEPGM\builds\2013-08-08_18-06-00\archive\output not exit pls check   && exit 1 ) 
+) 
+) 
+\\10.10.5.161\share_windows\SCV500_IEPGM\builds\2013-08-08_18-06-00\archive\output
+0
+"\\10.10.5.161\share_windows\SCV500_IEPGM\builds\2013-08-08_18-06-00\archive\output" 
+"\\10.10.5.161\share_windows\SCV500_IEPGM\builds\2013-08-08_18-06-00\archive\output" 
+"\\10.10.5.161\share_windows\SCV500_IEPGM\builds\2013-08-08_18-06-00\archive\output"
+hello
+
+D:\bash\autocopy\bak>(
+echo svn://10.10.5.66/B2C_TestRelease/doc/SCV500/SCV500R001B02/SCV500R001B026/doc  
+ echo !ERRORLEVEL!  
+ echo "svn://10.10.5.66/B2C_TestRelease/doc/SCV500/SCV500R001B02/SCV500R001B026/doc"   | findstr /m/i "10.10.5.161  10.10.5.165 10.10.5.66"  
+ IF !ERRORLEVEL! == 1 goto err  
+ echo "svn://10.10.5.66/B2C_TestRelease/doc/SCV500/SCV500R001B02/SCV500R001B026/doc"   | findstr /m/i "10.10.5.161 10.10.5.165 "  
+ IF !ERRORLEVEL! == 0 (
+echo "svn://10.10.5.66/B2C_TestRelease/doc/SCV500/SCV500R001B02/SCV500R001B026/doc"  
+ echo hello  
+ if not exist svn://10.10.5.66/B2C_TestRelease/doc/SCV500/SCV500R001B02/SCV500R001B026/doc (echo [error] svn://10.10.5.66/B2C_TestRelease/doc/SCV500/SCV500R001B02/SCV500R001B026/doc not exit pls check   && exit 1 ) 
+)  else (
+svn list svn://10.10.5.66/B2C_TestRelease/doc/SCV500/SCV500R001B02/SCV500R001B026/doc  
+ IF !ERRORLEVEL! == 1 (echo [error] svn://10.10.5.66/B2C_TestRelease/doc/SCV500/SCV500R001B02/SCV500R001B026/doc not exit pls check   && exit 1 ) 
+) 
+) 
+svn://10.10.5.66/B2C_TestRelease/doc/SCV500/SCV500R001B02/SCV500R001B026/doc
+0
+"svn://10.10.5.66/B2C_TestRelease/doc/SCV500/SCV500R001B02/SCV500R001B026/doc" 
+APK/
+CMS基本用例自测试报告.xls
+SCV500R001B026 升级操作说明（增量升级）.doc
+SCV500R001B026版本自测试报告.xls
+SCV500R001B026版本说明书.doc
+SCV500R001B02各版本配套表.xls
+取包路径.txt
+子部件变更记录/
+数据库升级脚本/
+
+D:\bash\autocopy\bak>pause
+请按任意键继续. . . 
+
+D:\bash\autocopy\bak>rem svn checkin 
+
+D:\bash\autocopy\bak>for %b in (svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02/SCV500R001B023/ADIAdapter_V500R001B01_svn.2774_20130513154813.zip \\10.10.5.161\share_windows\SCV500_IEPGM\builds\2013-08-08_18-06-00\archive\output svn://10.10.5.66/B2C_TestRelease/doc/SCV500/SCV500R001B02/SCV500R001B026/doc) do (
+echo %~nxb  
+ echo %b  
+ echo %b   | findstr 10.10.5.66  
+ if !ERRORLEVEL! == 0 (svn copy  %b svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02i/%~nxb -m "%b test"  --username qiaoting --password 789123   && echo "svn copy %b ok"   || goto svn_ci_error  )  else (svn import %b svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02i  -m "%b test" --username qiaoting --password 789123   && echo "svn ci %b ok"   || goto svn_ci_error ) 
+) 
+
+D:\bash\autocopy\bak>(
+echo ADIAdapter_V500R001B01_svn.2774_20130513154813.zip  
+ echo svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02/SCV500R001B023/ADIAdapter_V500R001B01_svn.2774_20130513154813.zip  
+ echo svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02/SCV500R001B023/ADIAdapter_V500R001B01_svn.2774_20130513154813.zip   | findstr 10.10.5.66  
+ if !ERRORLEVEL! == 0 (svn copy  svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02/SCV500R001B023/ADIAdapter_V500R001B01_svn.2774_20130513154813.zip svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02i/ADIAdapter_V500R001B01_svn.2774_20130513154813.zip -m "svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02/SCV500R001B023/ADIAdapter_V500R001B01_svn.2774_20130513154813.zip test"  --username qiaoting --password 789123   && echo "svn copy svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02/SCV500R001B023/ADIAdapter_V500R001B01_svn.2774_20130513154813.zip ok"   || goto svn_ci_error  )  else (svn import svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02/SCV500R001B023/ADIAdapter_V500R001B01_svn.2774_20130513154813.zip svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02i  -m "svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02/SCV500R001B023/ADIAdapter_V500R001B01_svn.2774_20130513154813.zip test" --username qiaoting --password 789123   && echo "svn ci svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02/SCV500R001B023/ADIAdapter_V500R001B01_svn.2774_20130513154813.zip ok"   || goto svn_ci_error ) 
+) 
+ADIAdapter_V500R001B01_svn.2774_20130513154813.zip
+svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02/SCV500R001B023/ADIAdapter_V500R001B01_svn.2774_20130513154813.zip
+svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02/SCV500R001B023/ADIAdapter_V500R001B01_svn.2774_20130513154813.zip 
+
+提交后的版本为 702。
+"svn copy svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02/SCV500R001B023/ADIAdapter_V500R001B01_svn.2774_20130513154813.zip ok" 
+
+D:\bash\autocopy\bak>(
+echo output  
+ echo \\10.10.5.161\share_windows\SCV500_IEPGM\builds\2013-08-08_18-06-00\archive\output  
+ echo \\10.10.5.161\share_windows\SCV500_IEPGM\builds\2013-08-08_18-06-00\archive\output   | findstr 10.10.5.66  
+ if !ERRORLEVEL! == 0 (svn copy  \\10.10.5.161\share_windows\SCV500_IEPGM\builds\2013-08-08_18-06-00\archive\output svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02i/output -m "\\10.10.5.161\share_windows\SCV500_IEPGM\builds\2013-08-08_18-06-00\archive\output test"  --username qiaoting --password 789123   && echo "svn copy \\10.10.5.161\share_windows\SCV500_IEPGM\builds\2013-08-08_18-06-00\archive\output ok"   || goto svn_ci_error  )  else (svn import \\10.10.5.161\share_windows\SCV500_IEPGM\builds\2013-08-08_18-06-00\archive\output svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02i  -m "\\10.10.5.161\share_windows\SCV500_IEPGM\builds\2013-08-08_18-06-00\archive\output test" --username qiaoting --password 789123   && echo "svn ci \\10.10.5.161\share_windows\SCV500_IEPGM\builds\2013-08-08_18-06-00\archive\output ok"   || goto svn_ci_error ) 
+) 
+output
+\\10.10.5.161\share_windows\SCV500_IEPGM\builds\2013-08-08_18-06-00\archive\output
+增加 (二进制)  \\10.10.5.161\share_windows\SCV500_IEPGM\builds\2013-08-08_18-06-00\archive\output\portalMS_V500R001B031_svn.5179_20130808181045.zip
+
+提交后的版本为 703。
+"svn ci \\10.10.5.161\share_windows\SCV500_IEPGM\builds\2013-08-08_18-06-00\archive\output ok" 
+
+D:\bash\autocopy\bak>(
+echo doc  
+ echo svn://10.10.5.66/B2C_TestRelease/doc/SCV500/SCV500R001B02/SCV500R001B026/doc  
+ echo svn://10.10.5.66/B2C_TestRelease/doc/SCV500/SCV500R001B02/SCV500R001B026/doc   | findstr 10.10.5.66  
+ if !ERRORLEVEL! == 0 (svn copy  svn://10.10.5.66/B2C_TestRelease/doc/SCV500/SCV500R001B02/SCV500R001B026/doc svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02i/doc -m "svn://10.10.5.66/B2C_TestRelease/doc/SCV500/SCV500R001B02/SCV500R001B026/doc test"  --username qiaoting --password 789123   && echo "svn copy svn://10.10.5.66/B2C_TestRelease/doc/SCV500/SCV500R001B02/SCV500R001B026/doc ok"   || goto svn_ci_error  )  else (svn import svn://10.10.5.66/B2C_TestRelease/doc/SCV500/SCV500R001B02/SCV500R001B026/doc svn://10.10.5.66/B2C_TestRelease/Test/SCV500/SCV500R001B02i  -m "svn://10.10.5.66/B2C_TestRelease/doc/SCV500/SCV500R001B02/SCV500R001B026/doc test" --username qiaoting --password 789123   && echo "svn ci svn://10.10.5.66/B2C_TestRelease/doc/SCV500/SCV500R001B02/SCV500R001B026/doc ok"   || goto svn_ci_error ) 
+) 
+doc
+svn://10.10.5.66/B2C_TestRelease/doc/SCV500/SCV500R001B02/SCV500R001B026/doc
+svn://10.10.5.66/B2C_TestRelease/doc/SCV500/SCV500R001B02/SCV500R001B026/doc 
+
+提交后的版本为 704。
+"svn copy svn://10.10.5.66/B2C_TestRelease/doc/SCV500/SCV500R001B02/SCV500R001B026/doc ok" 
+
+D:\bash\autocopy\bak>REM copy finished 
+
+D:\bash\autocopy\bak>exit 0 

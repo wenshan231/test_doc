@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="sshinstall" name="CLS">
+	<target name="sshinstall">
+		<echo>=========准备编译=========</echo>
+		<sshexec host="10.10.96.158"  
+	    	username="qiaoting"  
+	    	password="789123"  
+	   	 command="sh /home/qiaoting/CDN_R006/bash/CDN_commonsdk.sh  /home/qiaoting/CDN_R006/${build.name}/commonsdk" trust="true"/>  
+		<echo>=========完成编译=========</echo>
+	</target>
+</project>

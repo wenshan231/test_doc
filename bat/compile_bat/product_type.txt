@@ -1,0 +1,119 @@
+####################################################################
+#注释前需加“#”
+#产品型号与MIS系统、luntbuild工程名保持一致
+#产品型号先后顺序列排请按字母顺利
+####################################################################
+###
+#产品型号    #编译类型   #工作路径 
+CDVB         CDVB        E:\DVB\DATA\CDVB\AutoBuild\src
+UPI          UPI_GJ      D:\UPI
+hmc2         HMC         Y:\hmc2
+A700         UPI_GJ      D:\A700
+ANYSIGHT108  CDVB        E:\DVB\DATA\AnySight108\AutoBuild\src
+ANYSIGHT661  CDVB        E:\DVB\DATA\AnySight661\AutoBuild\src
+Anysight680  CDVB        E:\DVB\DATA\AnySight680\AutoBuild1\src
+CAM6410      LINUX       Y:\linux
+CAM6710      LINUX       Y:\linux
+CAM6730      LINUX_ex    Y:\linux
+CCM6220      CDVB        E:\DVB\DATA\CCM6220\AutoBuild\src
+CCM6280      CDVB        E:\DVB\DATA\CCM6280\AutoBuild\src
+CDVB5110G-IP CDVB        E:\DVB\DATA\CDVB5110G-IP\AutoBuild\src
+CDVBC5166    CDVB        E:\DVB\DATA\CDVBC5166\AutoBuild\src 
+CDVBC5600    CDVB        E:\DVB\DATA\AnySight600-t\AutoBuild\src
+CDVBC5600I   CDVB        E:\DVB\DATA\CDVBC5600I\AutoBuild\src
+CDVBC5800IE  CDVB        E:\DVB\DATA\CDVBC5800IE\AutoBuild\src
+CDVBC5800TE  CDVB        E:\DVB\DATA\CDVBC5800TE\AutoBuild\src
+CDVBC5800    CDVB        E:\DVB\DATA\CDVBC5800\AutoBuild\src
+CDVBC5820-M  CDVB        E:\DVB\DATA\CDVBC5820-M\AutoBuild\src
+CDVBC5820TE  CDVB        E:\DVB\DATA\CDVBC5820TE\AutoBuild\src
+CDVBC5820    CDVB        E:\DVB\DATA\CDVBC5820\AutoBuild\src
+CDVBC8750    CDVB        E:\DVB\DATA\CDVBC8750\AutoBuild\src 
+CMtool-new   CDVB        E:\DVB\DATA\EOC_Tool-new\AutoBuild\src
+EOC          LINUX       Y:\linux
+JS           HMC         Y:\hmc2
+LE01         HMC         Y:\hmc2
+LE01-Android HMC         Z:\hmc2
+N3600-CTM    CDVB        E:\DVB\DATA\N3600-CTM\AutoBuild
+N5166        CDVB        E:\DVB\DATA\N5166\AutoBuild\src
+N5166C       UPI_GJ      D:\N5166C
+N5200        CDVB        E:\DVB\DATA\N5200\AutoBuild\src
+N5200C       HMC         Y:\hmc2
+N5266C       UPI_GJ      D:\N5266C
+N5266T       UPI_GJ      D:\N5266T
+N5266S       UPI_GJ      D:\N5266S
+N5366S       UPI_GJ      D:\N5366S1
+N5366C       LINUX_GJ    Y:\linux
+N5480i       HMC         Y:\hmc2
+N6207I       HMC         Y:\hmc2
+N6207I-M     HMC         Y:\hmc2
+N6750C       CDVB        E:\DVB\DATA\N6750C\AutoBuild\src
+N6750T       UPI_GJ      D:\N6750T
+N6752        CDVB        E:\DVB\DATA\N6752\AutoBuild\src 
+N6752-BI     CDVB        E:\DVB\DATA\N6752-BI\AutoBuild\src 
+N6760B       UPI_GJ      D:\N6760B2
+N6760S       UPI_GJ      D:\N6760S1
+N7300        BCM         Y:\N7300
+N7300-CEOC   BCM         Y:\N7300-CEOC
+N7300-CCM    BCM         Y:\N7300-CCM
+N7550D       HMC         Y:\hmc2
+N7700        BCM         Y:\N7700
+N7700-10     BCM         Y:\N7700-10
+N7700-10-CTM BCM         Y:\N7700-10-CTM
+N7700-10-CTP BCM         Y:\N7700-10-CTP
+N7700-20     BCM         Y:\N7700-20
+N7700-CCM    BCM         Y:\N7700-CCM
+N8102        CDVB        E:\DVB\DATA\N8102\AutoBuild\src
+N8102T       CDVB        E:\DVB\DATA\N8102T\AutoBuild\src
+N8106        CDVB        E:\DVB\DATA\N8106\AutoBuild7\src
+N8606        BCM         Y:\N8606
+N8606-CTCM   BCM         Y:\N8606-CTCM
+N8606-CCM    BCM         Y:\N8606-CCM
+N8626I       HMC         X:\hmc2
+N8750C       CDVB        E:\DVB\DATA\N8750C\AutoBuild1\src
+N8760B       UPI_GJ      D:\N8760B
+N8760C       LINUX_GJ    Y:\linux
+N8760H       UPI         D:\N8760H
+N8770B       LINUX_GJ    Y:\linux
+N8770C       LINUX_GJ    Y:\linux
+N8770U       LINUX_GJ    Y:\linux
+N6772C       LINUX_GJ    Y:\linux
+N8808        HMC         Y:\hmc2
+N8908        HMC         Y:\hmc2
+N8908-CCM    HMC         Y:\hmc2
+N9000        HMC         Y:\hmc2
+N9100        HMC         Y:\hmc2
+N9101        HMC         Y:\hmc2
+N9107I       HMC         Y:\hmc2
+N9101-MBSSID LINUX       Y:\linux
+N9201        HMC         Y:\hmc2
+N9201-CCM    HMC         Y:\hmc2
+N9202        N9202       Y:\linux
+N9750C       UPI_GJ      D:\N9750C
+N9760C       UPI_GJ      D:\N9760C
+P5000        CDVB        E:\DVB\DATA\P5000\AutoBuild\src
+P5000-AU     CDVB        E:\DVB\DATA\P5000-AU\AutoBuild\src
+P8100        CDVB        E:\DVB\DATA\P8100\AutoBuild\src  
+P8300        CDVB        E:\DVB\DATA\P83001\AutoBuild\src
+WM3000       LINUX       Y:\linux
+WM3100       LINUX       Y:\linux
+WM3200       LINUX       Y:\linux
+WR3000       LINUX       Y:\linux
+CCM8200      LINUX       Y:\linux
+bcm          svn_bcm     Y:\
+UPI-linux    LINUX_GJ    Y:\linux
+N8770U       LINUX_GJ    Y:\linux
+N8780B       LINUX_GJ    Y:\linux
+N9085I       LINUX       w:\linux
+
+
+
+
+
+
+
+
+
+ 
+
+
+

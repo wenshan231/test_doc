@@ -1,0 +1,48 @@
+stp_package_mstar6a801_p7764_2013-06-07.tar.gz
+/home/hudson/S1001_CIBN_all_real-time/platform
+
+/home/qiaoting/SRC/FlyUI_Portal/output
+FlyUI_Portal_svn.442_20130608092334.zip
+Archive:  FlyUI_Portal_svn.442_20130608092334.zip
+  inflating: codeline.txt            
+  inflating: ChangeLog.txt           
+  inflating: FlyUI_Portal.apk        
+/home/qiaoting/SRC/FlyUI_VOD/output
+FlyUI_VOD_svn.441_20130607190815.zip
+Archive:  FlyUI_VOD_svn.441_20130607190815.zip
+  inflating: codeline.txt            
+  inflating: ChangeLog.txt           
+  inflating: FlyUI_VOD.apk           
+/home/hudson/apps/com.coship.app.vaf/output
+com.coship.app.vaf_svn.62719_20130516184942.tar.gz
+com.coship.app.vaf.apk
+/home/hudson/apps/com.coship.ChangeTheAudioOutput/output
+com.coship.ChangeTheAudioOutput_svn.62670_20130516185138.tar.gz
+com.coship.ChangeTheAudioOutput.apk
+/home/hudson/apps/com.coship.netfirmware/output
+com.coship.netfirmware_svn.62981_20130531092040.tar.gz
+com.coship.netfirmware.apk
+/home/hudson/apps/com.coship.NetworkNavigation/output
+com.coship.NetworkNavigation_svn.61820_20130514092710.tar.gz
+com.coship.NetworkNavigation.apk
+/home/hudson/apps/com.coship.TestApp/output
+com.coship.TestApp_svn.63890_20130524110631.tar.gz
+com.coship.TestApp.apk
+/home/hudson/apps/com.coship.trafficmonitor/output
+com.coship.trafficmonitor_svn.63802_20130516185957.tar.gz
+com.coship.trafficmonitor.apk
+/home/hudson/apps/BluetoothHeadsetICS/output
+BluetoothHeadsetICS_svn.60873_20130522185724.tar.gz
+BluetoothHeadsetICS.apk
+/home/hudson/apps/FlyUI_BootWizard/output
+FlyUI_BootWizard_svn.430_20130607174624.tar.gz
+FlyUI_BootWizard.apk
+/home/hudson/apps/FlyUI_Live/output
+FlyUI_Live_svn.380_20130607174704.tar.gz
+FlyUI_Live.apk
+/home/hudson/apps/com.coship.dvbsetting/output
+com.coship.dvbsetting_svn.63900_20130604190747.tar.gz
+com.coship.dvbsetting.apk
+/home/hudson/apps/FlyUI_HomePlayer/output
+FlyUI_HomePlayer_svn.323_20130605162713.tar.gz
+FlyUI_HomePlayer.apk

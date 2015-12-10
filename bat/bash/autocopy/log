@@ -1,0 +1,135 @@
+
+D:\bash\autocopy>﻿echo off 
+
+D:\bash\autocopy>echo 		****************************************************** 
+		******************************************************
+
+D:\bash\autocopy>echo 		          autocopy all package from auto make path or svn path 
+		          autocopy all package from auto make path or svn path
+
+D:\bash\autocopy>echo 		         Written by qiaoting on 2013.05.08 
+		         Written by qiaoting on 2013.05.08
+
+D:\bash\autocopy>echo 		****************************************************** 
+		******************************************************
+
+D:\bash\autocopy>rem parameter 
+
+D:\bash\autocopy>rem  
+
+D:\bash\autocopy>rem  
+
+D:\bash\autocopy>set svn_dir_path=http://10.10.5.52/Test/SCV500/SCV500R001/SCV500R001B02 
+
+D:\bash\autocopy>set product_version=SCV500R001B02i 
+
+D:\bash\autocopy>set mdl1_path=\\10.10.5.165\share\166output\SCV_CMS_trunk\builds\2013-05-08_10-21-34\archive\src\output 
+
+D:\bash\autocopy>set mdl2_path=\\10.10.5.165\share\166output\AppStore_client\builds\2013-05-06_15-06-05\archive\CIBN_out\output 
+
+D:\bash\autocopy>set mdl3_path=http://10.10.5.52/Test/SCV500/SCV500R001/SCV500R001B02/SCV500R001B022/CIBN_MovieonLine_svn.1201_ABC.zip 
+
+D:\bash\autocopy>D:
+
+D:\bash\autocopy>set ip1_address=10.10.5.165 
+
+D:\bash\autocopy>REM set ip2_address=10.10.5.166 
+
+D:\bash\autocopy>set svn_path=10.10.5.52 
+
+D:\bash\autocopy>rem mkdir test\SCV500R001B02i 
+
+D:\bash\autocopy>rem svn import  test\SCV500R001B02i http://10.10.5.52/Test/SCV500/SCV500R001/SCV500R001B02  -m "SCV500R001B02i test"  
+
+D:\bash\autocopy>rem if errorlevel 1 goto err_version 
+
+D:\bash\autocopy>svn list http://10.10.5.52/Test/SCV500/SCV500R001/SCV500R001B02/SCV500R001B02i 
+
+D:\bash\autocopy>if 1 EQU 0 goto err_version 
+
+D:\bash\autocopy>set mdl_all=\\10.10.5.165\share\166output\SCV_CMS_trunk\builds\2013-05-08_10-21-34\archive\src\output \\10.10.5.165\share\166output\AppStore_client\builds\2013-05-06_15-06-05\archive\CIBN_out\output http://10.10.5.52/Test/SCV500/SCV500R001/SCV500R001B02/SCV500R001B022/CIBN_MovieonLine_svn.1201_ABC.zip 
+
+D:\bash\autocopy>echo \\10.10.5.165\share\166output\SCV_CMS_trunk\builds\2013-05-08_10-21-34\archive\src\output \\10.10.5.165\share\166output\AppStore_client\builds\2013-05-06_15-06-05\archive\CIBN_out\output http://10.10.5.52/Test/SCV500/SCV500R001/SCV500R001B02/SCV500R001B022/CIBN_MovieonLine_svn.1201_ABC.zip 
+\\10.10.5.165\share\166output\SCV_CMS_trunk\builds\2013-05-08_10-21-34\archive\src\output \\10.10.5.165\share\166output\AppStore_client\builds\2013-05-06_15-06-05\archive\CIBN_out\output http://10.10.5.52/Test/SCV500/SCV500R001/SCV500R001B02/SCV500R001B022/CIBN_MovieonLine_svn.1201_ABC.zip
+
+D:\bash\autocopy>setlocal enabledelayedexpansion 
+
+D:\bash\autocopy>for %a in (\\10.10.5.165\share\166output\SCV_CMS_trunk\builds\2013-05-08_10-21-34\archive\src\output \\10.10.5.165\share\166output\AppStore_client\builds\2013-05-06_15-06-05\archive\CIBN_out\output http://10.10.5.52/Test/SCV500/SCV500R001/SCV500R001B02/SCV500R001B022/CIBN_MovieonLine_svn.1201_ABC.zip) do (
+echo %a  
+ echo !ERRORLEVEL!  
+ echo "%a"   | findstr /m/i "10.10.5.165 10.10.5.52"  
+ IF !ERRORLEVEL! == 1 goto err  
+ echo "%a"   | findstr /m/i "10.10.5.165"  
+ IF !ERRORLEVEL! == 0 (
+echo "%a"  
+ echo hello  
+ if not exist %a (echo [error] %a not exit pls check   && exit 1 ) 
+)  else (
+svn list %a  
+ IF !ERRORLEVEL! == 1 (echo [error] %a not exit pls check %   && exit 1 ) 
+) 
+) 
+
+D:\bash\autocopy>(
+echo \\10.10.5.165\share\166output\SCV_CMS_trunk\builds\2013-05-08_10-21-34\archive\src\output  
+ echo !ERRORLEVEL!  
+ echo "\\10.10.5.165\share\166output\SCV_CMS_trunk\builds\2013-05-08_10-21-34\archive\src\output"   | findstr /m/i "10.10.5.165 10.10.5.52"  
+ IF !ERRORLEVEL! == 1 goto err  
+ echo "\\10.10.5.165\share\166output\SCV_CMS_trunk\builds\2013-05-08_10-21-34\archive\src\output"   | findstr /m/i "10.10.5.165"  
+ IF !ERRORLEVEL! == 0 (
+echo "\\10.10.5.165\share\166output\SCV_CMS_trunk\builds\2013-05-08_10-21-34\archive\src\output"  
+ echo hello  
+ if not exist \\10.10.5.165\share\166output\SCV_CMS_trunk\builds\2013-05-08_10-21-34\archive\src\output (echo [error] \\10.10.5.165\share\166output\SCV_CMS_trunk\builds\2013-05-08_10-21-34\archive\src\output not exit pls check   && exit 1 ) 
+)  else (
+svn list \\10.10.5.165\share\166output\SCV_CMS_trunk\builds\2013-05-08_10-21-34\archive\src\output  
+ IF !ERRORLEVEL! == 1 (echo [error] \\10.10.5.165\share\166output\SCV_CMS_trunk\builds\2013-05-08_10-21-34\archive\src\output not exit pls check %   && exit 1 ) 
+) 
+) 
+\\10.10.5.165\share\166output\SCV_CMS_trunk\builds\2013-05-08_10-21-34\archive\src\output
+0
+"\\10.10.5.165\share\166output\SCV_CMS_trunk\builds\2013-05-08_10-21-34\archive\src\output" 
+"\\10.10.5.165\share\166output\SCV_CMS_trunk\builds\2013-05-08_10-21-34\archive\src\output" 
+"\\10.10.5.165\share\166output\SCV_CMS_trunk\builds\2013-05-08_10-21-34\archive\src\output"
+hello
+
+D:\bash\autocopy>(
+echo \\10.10.5.165\share\166output\AppStore_client\builds\2013-05-06_15-06-05\archive\CIBN_out\output  
+ echo !ERRORLEVEL!  
+ echo "\\10.10.5.165\share\166output\AppStore_client\builds\2013-05-06_15-06-05\archive\CIBN_out\output"   | findstr /m/i "10.10.5.165 10.10.5.52"  
+ IF !ERRORLEVEL! == 1 goto err  
+ echo "\\10.10.5.165\share\166output\AppStore_client\builds\2013-05-06_15-06-05\archive\CIBN_out\output"   | findstr /m/i "10.10.5.165"  
+ IF !ERRORLEVEL! == 0 (
+echo "\\10.10.5.165\share\166output\AppStore_client\builds\2013-05-06_15-06-05\archive\CIBN_out\output"  
+ echo hello  
+ if not exist \\10.10.5.165\share\166output\AppStore_client\builds\2013-05-06_15-06-05\archive\CIBN_out\output (echo [error] \\10.10.5.165\share\166output\AppStore_client\builds\2013-05-06_15-06-05\archive\CIBN_out\output not exit pls check   && exit 1 ) 
+)  else (
+svn list \\10.10.5.165\share\166output\AppStore_client\builds\2013-05-06_15-06-05\archive\CIBN_out\output  
+ IF !ERRORLEVEL! == 1 (echo [error] \\10.10.5.165\share\166output\AppStore_client\builds\2013-05-06_15-06-05\archive\CIBN_out\output not exit pls check %   && exit 1 ) 
+) 
+) 
+\\10.10.5.165\share\166output\AppStore_client\builds\2013-05-06_15-06-05\archive\CIBN_out\output
+0
+"\\10.10.5.165\share\166output\AppStore_client\builds\2013-05-06_15-06-05\archive\CIBN_out\output" 
+"\\10.10.5.165\share\166output\AppStore_client\builds\2013-05-06_15-06-05\archive\CIBN_out\output" 
+"\\10.10.5.165\share\166output\AppStore_client\builds\2013-05-06_15-06-05\archive\CIBN_out\output"
+hello
+
+D:\bash\autocopy>(
+echo http://10.10.5.52/Test/SCV500/SCV500R001/SCV500R001B02/SCV500R001B022/CIBN_MovieonLine_svn.1201_ABC.zip  
+ echo !ERRORLEVEL!  
+ echo "http://10.10.5.52/Test/SCV500/SCV500R001/SCV500R001B02/SCV500R001B022/CIBN_MovieonLine_svn.1201_ABC.zip"   | findstr /m/i "10.10.5.165 10.10.5.52"  
+ IF !ERRORLEVEL! == 1 goto err  
+ echo "http://10.10.5.52/Test/SCV500/SCV500R001/SCV500R001B02/SCV500R001B022/CIBN_MovieonLine_svn.1201_ABC.zip"   | findstr /m/i "10.10.5.165"  
+ IF !ERRORLEVEL! == 0 (
+echo "http://10.10.5.52/Test/SCV500/SCV500R001/SCV500R001B02/SCV500R001B022/CIBN_MovieonLine_svn.1201_ABC.zip"  
+ echo hello  
+ if not exist http://10.10.5.52/Test/SCV500/SCV500R001/SCV500R001B02/SCV500R001B022/CIBN_MovieonLine_svn.1201_ABC.zip (echo [error] http://10.10.5.52/Test/SCV500/SCV500R001/SCV500R001B02/SCV500R001B022/CIBN_MovieonLine_svn.1201_ABC.zip not exit pls check   && exit 1 ) 
+)  else (
+svn list http://10.10.5.52/Test/SCV500/SCV500R001/SCV500R001B02/SCV500R001B022/CIBN_MovieonLine_svn.1201_ABC.zip  
+ IF !ERRORLEVEL! == 1 (echo [error] http://10.10.5.52/Test/SCV500/SCV500R001/SCV500R001B02/SCV500R001B022/CIBN_MovieonLine_svn.1201_ABC.zip not exit pls check %   && exit 1 ) 
+) 
+) 
+http://10.10.5.52/Test/SCV500/SCV500R001/SCV500R001B02/SCV500R001B022/CIBN_MovieonLine_svn.1201_ABC.zip
+0
+"http://10.10.5.52/Test/SCV500/SCV500R001/SCV500R001B02/SCV500R001B022/CIBN_MovieonLine_svn.1201_ABC.zip" 
+[error] http://10.10.5.52/Test/SCV500/SCV500R001/SCV500R001B02/SCV500R001B022/CIBN_MovieonLine_svn.1201_ABC.zip not exit pls check % 

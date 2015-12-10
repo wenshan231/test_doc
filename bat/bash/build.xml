@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="sshinstall" name="N9085I">
+	<target name="sshinstall">
+		<echo>=========准备安装=========</echo>
+		<sshexec host="10.10.5.165"  
+	    	username="ott-admin"  
+	    	password="123456"  
+	   	 command="sh /home/ott-admin/bash/script/automake_n9805i.sh   n9085i /home/hudson/n9085i/code  /home/hudson/n9085i/code/release2test  /home/hudson/n9085i/code/release2integration" trust="true"/>  
+		<echo>=========完成版本和安装=========</echo>
+	</target>
+</project>

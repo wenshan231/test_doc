@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="rdsrc" name="hudson">
+	<target name="rdsrc">
+		<echo>=========准备删除=========</echo>
+		<sshexec host="10.10.5.161"  
+	    	username="qiaoting"  
+	    	password="789456"  
+	   	 	command="sh /home/ott-admin/bash/shell_script/rdsrc.sh ${args}" 
+	   	 	trust="true"/>  
+		<echo>=========完成删除=========</echo>
+	</target>
+</project>
