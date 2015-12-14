@@ -117,6 +117,8 @@ cd git-1.8.4
 make 
 make install
 
+samba源码安装（未配置）
+http://www.2cto.com/os/201408/327930.html
 
 安装samba rpm包
 3、安装Samba 

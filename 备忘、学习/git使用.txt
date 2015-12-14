@@ -1,0 +1,87 @@
+   
+git rev-parse HEAD 查看git仓库最新版本号    
+    
+    repo init -u ssh://10.10.5.66:29418/cm/CyanogenMod/android -b cm-10.1-coship-taiwan --no-repo-verify
+    repo sync
+    repo start cm-10.1-coship-taiwan --all
+
+    repo start之后本地才有那个分支，才能看到
+    操作git库的递归命令repo forall -c git ...
+
+
+
+快进（Fast Forward）
+        当前分支合并到另一分支时，如果没有分歧解决，就会直接移动文件指针。这个过程叫做fast forward。 举例来说，开发一直在master分支进行，但忽然有一个新的想法，
+	于是新建了一个develop的分支，并在其上进行一系列提交，完成时，回到 master分支，此时，master分支在创建develop分支之后并未产生任何新的commit。
+	此时的合并就叫fast forward。
+
+git merge --no-ff 即使是Fast Forward合并发生也可以自动生成一条合并的提交记录   也可采用git merge --no-commit 自己再手动提交一次
+
+
+远程删除了一个分支之后，本地采用 git remote show origin 可查看该分支状态为stale 然后用git remote prune origin 可从本地库中删除  （git fetch -p）
+ 
+git push origin --delete test 删除远程分支 需要权限才行
+
+git help (命令名) //svn --help co 
+
+git config --global user.name 
+git config --global user.email 
+git config --global alias.co checkout
+git config --list
+ssh-keygen -t rsa
+
+ssh -p 29418 liuya@10.10.5.66
+
+git remote -v 跟svn info 一样可以查看远程git仓库的路径
+
+git commit -m "delete add.txt and add1.txt"
+
+在特性分支上开发并上传:
+git checkout -b FBR_addCron //创建并切换到FBR_addCron分支
+
+git checkout develop //切换到develop分支
+
+
+git fetch origin master:tmp
+
+git diff tmp(合并之后删除git branch -d tmp)
+
+git merge --no-ff FBR_addCron //合并FBR_addCron到develop
+（--no-ff，即not fast forward，其作用
+是：要求git merge即使在fast forward
+条件下也要产生一个新的merge
+commit）（此处，要求采用--no-ff的方
+式进行分支合并，其目的在于，希望保
+持原有“Feature branches”整个提交
+链的完整性）
+git branch -d myfeature//删除myfeature分支
+
+git push origin develop//从develop分支push到origin
+
+git clone ssh://10.10.5.66:29418/test_git/test
+
+git add //1.增加到暂存区；2.合并时解决冲突
+
+git
+
+git diff //比较修改了的和暂存区域的差异
+
+git diff staged //查看已经暂存了的和提交的差异
+
+git rm //git rm --cached（删除跟踪不删除本地） //删除（之后需提交）
+
+git mv//重命名文件
+
+git log -n //显示最近n次提交每次内容差异
+
+git commit --amend //修改最后一次的提交，可以补充提交内容
+
+git checkout --file //取消工作区和暂存区的修改，直接用版本库覆盖
+
+git tag -a 标签名 version -m "备注信息" //含附注的标签
+
+git pull //自动抓取clone的仓库中数据合并到本地当前分支// git fetch 不自动合并
+
+git push origin master //推送到远程仓库// 推送标签git push origin tagname
+
+天威百万高清项目适配九洲应用版本
