@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+
+
+    <pluginGroups>
+        <pluginGroup>org.sonatype.plugins</pluginGroup>
+    </pluginGroups>
+
+    <servers>
+        <server>
+            <id>nexus</id>
+            <username>admin</username>
+            <password>admin123</password>
+        </server>
+    </servers>
+
+    <mirrors>
+        <mirror>
+            <id>nexus</id>
+            <mirrorOf>*</mirrorOf>
+            <url>http://172.21.92.162:8081/repository/maven-public/</url>
+        </mirror>
+<!--         <mirror>
+            <id>repo2</id>
+            <mirrorOf>central</mirrorOf>
+            <name>Human Readable Name for this Mirror.</name>
+           <url>http://repo2.maven.org/maven2/</url>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+        </mirror>
+-->
+    </mirrors>
+
+    <profiles>
+        <profile>
+            <id>nexus</id>
+            <repositories>
+                <repository>
+                    <id>central</id>
+                    <url>http://central</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>central</id>
+                    <url>http://central</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </pluginRepository>
+            </pluginRepositories>
+        </profile>
+    </profiles>
+
+    <activeProfiles>
+        <activeProfile>nexus</activeProfile>
+    </activeProfiles>
+</settings>

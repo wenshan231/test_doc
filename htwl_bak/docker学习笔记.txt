@@ -1,0 +1,420 @@
+自动部署服务到docker容器步骤：
+1、服务器配置jdk maven 等Java编译环境
+2、安装docker
+3、jekins构建的时候pom.xml里面添加docker插件信息
+
+物联监控项目部署参考jenkins配置(pom.xml)：
+Docker:
+           <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.4.11</version>
+                <configuration>
+                    <imageName>${project.build.finalName}</imageName>
+                    <baseImage>java</baseImage>
+                    <exposes>9001</exposes>
+                    <entryPoint>["java", "-jar", "${project.build.finalName}.jar"]</entryPoint> 
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
+			
+4、打包编译build docker images
+5、docker run 
+
+
+
+服务器docker环境搭建：参考http://www.itkeyword.com/doc/0948871362026893x519
+
+一、初步搭建过程
+1、安装docker 
+
+2、安装consul，启动consul发现注册服务
+配置docker-compose.yml文件里consul
+
+consulserver:
+  image: progrium/consul:latest
+  hostname: consulserver
+  ports:
+  - "8300:8300"
+  - "8400:8400"
+  - "8500:8500"
+  - "8600:53/udp"
+  command: -server -bootstrap -client 0.0.0.0 -advertise 172.21.92.21
+
+  采用 docker-compose up 启动consul
+
+
+
+3、安装registrator，启动registrator(采用注册到consul的key/value方式启动),registrator自动收集consul中服务信息，并注册到consul生成key/value
+
+启动registrator命令：
+
+docker run -d --name=registrator --net=host --volume=/var/run/docker.sock:/tmp/docker.sock gliderlabs/registrator:latest consulkv://localhost:8500/hello
+
+
+4、安装consul-template，自动读取consul中的key/value,然后自动修改nginx的配置文件nginx.conf(consul-template和nginx必须装到一台机器)
+
+有添加服务要重新运行consul-template：
+consul-template -consul 172.21.92.21:8500 -template "/home/htwl/work/web/nginx_web_1.ctmpl:/etc/nginx/nginx.conf:nginx -s reload"
+
+nginx_web_1.ctmpl由nginx.conf的默认配置添加如下配置
+
+      {{ range $key, $pairs := tree "hello" | byKey }}location /{{ $key }}/ {
+           proxy_pass   http://172.21.92.21{{ range $pair := $pairs }}{{ .Value}}/;{{ end }}
+
+5、采用nginx反向代理后的访问参考http://www.ttlsa.com/nginx/use-nginx-proxy/
+
+nginx启动命令：
+/usr/local/nginx/sbin/nginx -c /etc/nginx/nginx.conf
+
+root@htwl:/etc/consul.d# cd /usr/local/nginx/sbin/
+root@htwl:/usr/local/nginx/sbin# ls
+nginx  nginx.old
+root@htwl:/usr/local/nginx/sbin# ./nginx -s reload
+
+/etc/nginx/nginx.conf文件配置类似如下：
+
+
+   server {
+        listen       80;
+        server_name  htwl.docker.com;      
+
+      location /consul-53/ {
+           proxy_pass   http://172.21.92.21:8600/;
+}
+location /consul-8300/ {
+           proxy_pass   http://172.21.92.21:8300/;
+}
+location /consul-8400/ {
+           proxy_pass   http://172.21.92.21:8400/;
+}
+location /consul-8500/ {
+           proxy_pass   http://172.21.92.21:8500/;
+}
+location /htwl-oauth2-login-8080/ {
+           proxy_pass   http://172.21.92.21:32773/;
+}
+location /htwl-oauth2-login-9001/ {
+           proxy_pass   http://172.21.92.21:32774/;
+}
+location /htwl-userwljk/ {
+           proxy_pass   http://172.21.92.21:32774/;
+}
+location /htwl_alarm_wljk/ {
+           proxy_pass   http://172.21.92.21:9506/;
+
+}
+
+
+或者
+
+server {
+    listen 80;
+    server_name aa.com bb.com cc.com;
+    location / {
+        proxy_redirect off;
+        proxy_set_header Host $host;
+        proxy_set_header X-real-ip $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_pass http://cdn.xxx.com;
+    }
+
+
+
+
+http://172.21.92.21/htwl-oauth2-login/?client_id=e2f1fcf5a3c841498af562564107013e  
+
+
+http://172.21.92.21:8888/htwl_alarm_wljk/v01/htwl/wljk/alarm/desc
+
+
+
+
+6、docker的移植方法http://www.jb51.net/os/other/378697.html
+1)查看容器id
+docker ps 
+2)提交到备份容器
+docker commit -p 30b8f18f20b4 container-backup
+3)把容器镜像导出保存成tar文件
+docker save -o ~/container-backup.tar container-backup
+4)在需要部署的服务器上导入tar文件为镜像
+docker load -i ~/container-backup.tar
+5)在新的服务器上启动容器
+docker run -d -p 80:8080 container-backup
+
+
+
+
+存在的问题
+1、服务更新后要不要每次都运行consul-template命令
+2、域名htwl.docker.com访问不了
+3、删除服务的时候，nginx配置文件已经删除配置后浏览器上还能以代理的方式访问
+4、nginx直接访问静态页面
+
+
+iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT 设置也不行
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+二、consul多台机器、集群的搭建
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+consul启动http://www.cnblogs.com/niejunlei/p/5982911.html
+
+动态修改配置文件
+支持服务协同
+建立leader选举
+提供服务发现
+集成健康检查
+
+
+nginx作用   反向代理 负载均衡 参考地址http://blog.csdn.net/zhongguozhichuang/article/details/52816887
+Nginx启动命令 http://www.cnblogs.com/codingcloud/p/5095066.html
+
+root@htwl:/etc/consul.d# cd /usr/local/nginx/sbin/
+root@htwl:/usr/local/nginx/sbin# ls
+nginx  nginx.old
+root@htwl:/usr/local/nginx/sbin# ./nginx -s reload
+
+consul-template具体操作？？
+
+
+
+docker具体操作可参考http://www.open-open.com/lib/view/open1427687828240.html
+
+mvn docker:build的时候镜像名不能有大写
+
+nginx配置文件：/etc/nginx/nginx.conf 
+
+
+
+root@htwl:/home/htwl# cat docker-compose.yml 
+
+consulserver:
+  image: progrium/consul:latest
+  hostname: consulserver
+  ports:
+  - "8300:8300"
+  - "8400:8400"
+  - "8500:8500"
+  - "8600:53/udp"
+  command: -server -bootstrap -client 0.0.0.0 -advertise 172.21.92.21
+
+# listen on local docker sock to register the container with public ports to the consul service
+registrator:
+  image: gliderlabs/registrator:master
+  hostname: registrator
+  links:
+  - consulserver:consul
+  volumes:
+  - "/var/run/docker.sock:/tmp/docker.sock"
+  command: -internal consul://172.21.92.21:8500
+
+#web:
+#  image: yeasy/simple-web:latest
+#  environment:
+#    SERVICE_80_NAME: http
+#    SERVICE_NAME: web
+#    SERVICE_TAGS: backend
+#  ports:
+#  - "80"
+
+#load balancer will automatically update the config using consul-template
+#lb:
+#  image: yeasy/nginx-consul-template:latest
+#  hostname: lb
+#  links:
+#  - consulserver:consul
+#  ports:
+#  - "80:80"
+
+
+
+
+root@consul-server:/# curl 172.21.92.21:9001
+curl: (7) Failed to connect to 172.21.92.21 port 9001: Connection refused
+root@consul-server:/# curl 127.0.0.1:9001
+{"timestamp":"2017-04-10 11:10:17","status":404,"error":"Not Found","message":"No message available","path":"/"}root@consul-server:/# ^C
+htwl@htwl:~$ docker ps
+CONTAINER ID        IMAGE                           COMMAND                  CREATED             STATUS              PORTS                                                                                                                                NAMES
+9cca5f1379fe        htwl_alarm_wljk                 "java -jar htwl_al..."   43 minutes ago      Up 43 minutes       0.0.0.0:32768->9001/tcp                                                                                                              htwl_alarm_wljk
+f3347de73b9d        gliderlabs/registrator:master   "/bin/registrator ..."   5 weeks ago         Up 30 minutes                                                                                                                                            htwl_registrator_1
+9cf7eed20c28        progrium/consul:latest          "/bin/start -serve..."   5 weeks ago         Up 30 minutes       53/tcp, 0.0.0.0:8300->8300/tcp, 0.0.0.0:8400->8400/tcp, 8301-8302/tcp, 0.0.0.0:8500->8500/tcp, 8301-8302/udp, 0.0.0.0:8600->53/udp   htwl_consulserver_1
+htwl@htwl:~$  curl 127.0.0.1:9001
+curl: (7) Failed to connect to 127.0.0.1 port 9001: Connection refused
+htwl@htwl:~$  curl 127.0.0.1
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+htwl@htwl:~$ 
+
+docker容器内服务外部访问方式：
+157363d28437        htwl_alarm_wljk                 "java -jar htwl_al..."   2 hours ago          Up 2 hours          0.0.0.0:32771->9001/tcp   
+
+外部访问端口32771，对应docker容器内部的9001端口
+访问地址如下：
+http://172.21.92.21:32771/v01/htwl/wljk/alarm/desc
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+通过docker:build制作自己的镜像
+mvn clean package docker:removeImage docker:build
+
+创建Docker容器：
+docker run -itd jar包的名称 /bin/bash
+docker run -d -P --name ${JOB_NAME} -h consul-server ${JOB_NAME}
+
+
+
+
+查看容器：
+docker ps
+
+docker --help
+
+进去容器安装nsenter
+
+docker inspect来查看该容器的详细信息
+
+显示该容器第一个进行的PID
+$ sudo docker inspect -f {{.State.Pid}} 44fc0f0582d9 
+3326
+在拿到该进程PID之后我们就可以使用nsenter命令访问该容器了。
+sudo nsenter --target 3326 --mount --uts --ipc --net --pid  
+参考https://yeasy.gitbooks.io/docker_practice/content/container/enter.html
+
+推荐：
+docker在1.3.X版本之后还提供了一个新的命令exec用于进入容器
+$ sudo docker ps  
+$ sudo docker exec -it  775c7c9ee1e1 /bin/bash
+
+ctrl+p+q 退出容器但不关闭, docker ps 查看有
+
+查看容器日志
+
+docker logs 容器名称
+
+
+
+用nginx做负载均衡,手动的方式是在upstream中添加或删除后端服务器,比较麻烦.
+通过Registrator收集需要注册到Consul作为Nginx后端服务器信息然后注册到Consul key/value.  Consul-template去Consul key/value中读取信息,
+然后自动修改Nginx配置文件并平滑重启Nginx.不需要修改nginx.conf
+
+
+docker镜像迁移到其他服务器的方法
+1. 可以通过`docker commit`命令提交image到本地，然后push到registry服务器上(私有的或者共有的docker hub)，然后从registry服务器上拉取到本地就可以了。
+2. 通过`docker export`或者`docker save`命令将image保存下来，然后通过`docker import`命令导入就可以了。
+
+另外可以通过写dockerfile来移植，`docker build`就好。
+
+
+Export命令用于持久化容器（不是镜像）
+ docker export 82d7caca3955 > /home/htwl/export.tar
+ cat /home/htwl/export.tar | docker import - htwl_alarm_wljk  
+ docker run -d -p 8080:8080 -P --name htwl-oauth2-login -h docker-server htwl-oauth2-login
+
+Save命令用于持久化镜像（不是容器）
+docker save busybox-1 > /home/save.tar
+docker load < /home/save.tar

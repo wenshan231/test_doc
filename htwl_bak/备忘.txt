@@ -1,0 +1,374 @@
+主要工作分类
+
+1、服务器信息 SVN：https://10.50.40.38:18000/svn/DOC/10服务器管理/服务器资料.xlsx
+部门相关资料：https://10.50.40.38:18000/svn/DOC
+svn服务器远程登录的时候添加端口61234 SVN目前备份在172.21.92.97 E:\Repositories 上，备份策略为每周六晚0点32分开始全量备份（后面数据量大考虑增加增量备份频率）
+
+Windows上查看端口是否被占用情况
+netstat -ano |findstr "8089"                        2720
+taskkill /pid 2720 -t -f;
+tasklist|findstr "2720"             Tencentdl.exe
+taskkill /f /t /im Tencentdl.exe    
+
+或者是我们打开任务管理器，切换到进程选项卡，在PID一列查看2720对应的进程是谁，如果看不到PID这一列,则我们点击查看--->选择列，将PID(进程标示符)前面的勾打上，点击确定。
+
+
+2、禅道：http://10.50.40.39/pro/   admin/admin123456
+/opt/zbox/zbox start
+
+禅道备份
+[root@xiangmuguanli etc]# crontab -l
+0 0 * * 6 /opt/zbox/app/zentaopro/bin/backup.sh
+备份路径
+/opt/zbox/app/zentaopro/backup  备份正常每周六0点开始，还原需要验证
+
+禅道使用流程参考、禅道管理项目学习路径http://www.zentao.net/book/zentaopmshelp/165.html
+
+
+3、jenkins：http://172.21.92.97:8080/  admin/123456  
+参考网址：http://blog.csdn.net/wangmuming/article/details/22925127/
+
+172.21.92.189：D:\jenkins
+
+java -jar "D:\Program Files\slave.jar" -jnlpUrl http://172.21.92.97:8080/computer/172.21.92.189/slave-agent.jnlp -secret 2cac3f43975d7f560052c4f47a847d7e4a10201e3e91b147354f8babd885b3ed
+
+本机连接：java -jar "D:\Program Files\slave.jar" -jnlpUrl http://172.21.92.97:8080/computer/172.21.92.134/slave-agent.jnlp -secret e2d51f86c46cf9e787ed5fa09d439b14cbe2cc2c1db4cf25be315e0d104540ed
+
+172.21.92.59的本地仓库地址/home/htwl/.m2/repository/，有时候需要手动删除后更新
+
+
+
+
+4、Nexus ：http://172.21.92.97:8888/ admin/admin123
+D:\nexus\nexus-3.2.0-01\bin\nexus.exe /run
+nexus配置文件路径：E:\nexus\nexus-3.2.0-01\etc
+私服配置文件（替换maven安装目录下同名文件）：https://10.50.40.38:18000/svn/DOC/10服务器管理/settings.xml
+
+172.21.92.59上maven配置文件路径：/opt/apache-maven-3.3.9/conf
+
+上传jar包：
+mvn deploy:deploy-file -DgroupId=com.oracle -DartifactId=ojdbc14 -Dversion=10.2.0.3.0 -Dpackaging=jar -Dfile="ojdbc14-10.2.0.3.0.jar" -Durl=http://172.21.92.97:8888/repository/maven-releases/ -DrepositoryId=nexus
+
+mvn deploy:deploy-file -DgroupId=org.richard -DartifactId=wljk-core -Dversion=1.0 -Dpackaging=jar -Dfile="wljk-core.jar" -Durl=http://172.21.92.162:8081/repository/maven-releases/ -DrepositoryId=nexus
+
+写全路径
+D:\apache-maven-3.3.9\bin\mvn deploy:deploy-file -DgroupId=org.richard -DartifactId=wljk-core -Dversion=1.0 -Dpackaging=jar -Dfile="E:\04 SVN\resources\jar\wljk-core.jar" -Durl=http://172.21.92.162:8081/repository/maven-releases/ -DrepositoryId=nexus
+注意上传的时候指定的jar包目录不能是本地仓库里面，必须是其他目录才行，否则报错
+
+5、项目相关：
+
+1）固废管理项目正式上线
+
+内网应用服务器：10.118.2.73 
+
+数据库服务器：10.118.2.72 计划任务里有备份设置（Oracle 和ftp）备份数据在陈平旁边的电脑上面 ，还需要设置MySQL server备份 
+MySQL备份：
+http://jingyan.baidu.com/article/ea24bc39baa5dcda63b33156.html
+启动MySQL server代理：
+http://jingyan.baidu.com/article/2f9b480d986a9941cb6cc2e5.html
+
+MySQL server的备份需要验证  
+
+外网服务器：10.50.40.55   http://10.50.40.55:8081/CQHWMS/login.jsp  外网部署的时候需要删掉greamLogin.jsp
+
+后续需要进行代码的更新、编译验证、功能修改记录以及上传SVN归档 现在代码路径H:\CQHWMS_success
+
+
+
+
+2）物联监控：
+http://172.21.92.189/wljk/login-1.html
+物联监控项目api路径：
+http://172.21.92.189/api/equiment/
+
+
+6、docker
+172.21.92.59
+
+docker logs 容器名
+docker stop 容器名
+docker start 容器名
+docker top 容器id  可查看运行在容器内的进程
+DOCKER_STORAGE_OPTIONS="--storage-driver=devicemapper"
+
+docker故障基本排查参考https://yq.aliyun.com/articles/59144
+
+物联监控项目部署参考jenkins配置(pom.xml)：
+Docker:
+           <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.4.11</version>
+                <configuration>
+                    <imageName>${project.build.finalName}</imageName>
+                    <baseImage>java</baseImage>
+                    <exposes>9001</exposes>
+                    <entryPoint>["java", "-jar", "${project.build.finalName}.jar"]</entryPoint> 
+                    <resources>
+		   <resource>
+                            <targetPath>/sdk</targetPath>
+                            <directory>sdk/</directory>
+                            <include>*</include>
+                        </resource>
+						<resource>
+                            <targetPath>/sdk/HCNetSDKCom</targetPath>
+                            <directory>sdk/HCNetSDKCom</directory>
+                            <include>*</include>
+                        </resource>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
+
+
+过程：
+
+  1. repo的每一个commit通知给Jenkins
+  2. Jenkins触发一个Maven build（见jenkins配置、pom.xml）
+  3. Maven 构建所有的东西，包括Docker镜像
+  4. 运行Docker容器，自动Registry。
+
+启动consulserver、registrator：
+htwl@htwl:~$ docker-compose up    docker-compose.yml文件里去掉registrator的配置，用下面注册到consul的key/value这种方法启动registrator
+
+注册到Consul的key/value：
+htwl@htwl:~$ docker run -d --name=registrator --net=host --volume=/var/run/docker.sock:/tmp/docker.sock gliderlabs/registrator:latest consulkv://localhost:8500/hello
+切换到root，运行Consul Template
+root@htwl:/home/htwl# consul-template -consul 172.21.92.21:8500 -template "/home/htwl/work/web/nginx_web_1.ctmpl:/etc/nginx/nginx.conf:nginx -s reload"
+
+
+
+docker常用命令http://blog.csdn.net/jinzhencs/article/details/51397634
+
+docker-compose：
+参考http://dockone.io/article/834
+配置docker-compose.yml文件里consul和registrator
+
+   upstream app {
+     {{range $key, $pairs := tree "hello/" | byKey}}{{range $serverid, $pair := $pairs}}
+     server {{.Value}}； weight=1 {{end}}{{end}}
+   }
+
+
+
+      {{ range $key, $pairs := tree "hello" | byKey }}location /{{ $key }}/ {
+           proxy_pass   http://172.21.92.21{{ range $pair := $pairs }}{{ .Value}}/;{{ end }}
+
+
+<dependency>
+    <groupId>org.aspectj</groupId>
+    <artifactId>aspectjweaver</artifactId>
+    <version>1.8.6</version>
+</dependency>
+
+
+
+进入docker容器方法：
+$ sudo docker ps  
+$ sudo docker exec -it  775c7c9ee1e1 /bin/bash
+
+ctrl+p+q 退出容器但不关闭, docker ps 查看有
+
+
+
+
+
+
+
+[htwl_enterprise_wljk] $ /bin/sh -xe /tmp/hudson8468671634325831256.sh
++ docker run -d -p 9601:9601 -P --name htwl_enterprise_wljk -h consul-server htwl_enterprise_wljk
+8b346177a58d9b911f8a7396f1704fb3c9d588925faa88eb6d22db55d41234f1
+Error response from daemon: Cannot start container 8b346177a58d9b911f8a7396f1704fb3c9d588925faa88eb6d22db55d41234f1: iptables failed: iptables -t nat -A DOCKER -p tcp -d 0/0 --dport 9601 -j DNAT --to-destination 172.17.0.52:9601 ! -i docker0: iptables: No chain/target/match by that name.
+
+错误原因：服务器防火墙关掉之后，需要重启docker服务
+
+
+docker服务器上容器间通信问题，防火墙关闭后需要重启docker服务
+iptables -F ，然后重启docker，防火墙问题
+
+docker详细的基础用法
+http://www.open-open.com/lib/view/open1410568733492.html
+
+docker容器时间不对：
+启动容器时候加一下 -v /etc/localtime:/etc/localtime，容器里面就会跟host一个时区了
+也可以在Dockerfile里面指定。
+
+
+
+
+
+
+
+docker容器内服务外部访问方式：
+http://172.21.92.21:32768/v01/htwl/wljk/alarm/desc
+
+http://172.21.92.21:32773/?client_id=e2f1fcf5a3c841498af562564107013e
+
+
+
+
+
+参考：
+
+
+Linux备份流程举例
+
+step1：写cron脚本文件，命名为crontest.cron。
+
+15,30,45,59 * * * * echo "xgmtest....."     表示，每隔15分钟，执行一次打印命令 
+
+step2：添加定时任务。执行命令
+
+1
+crontab /home/del/crontest.cron >~/log
+step3："crontab -l" 查看定时任务是否成功或者检测/var/spool/cron下是否生成对应cron脚本
+
+1
+crontab -l
+结果程序会每个15分钟往脚本里写一次“xgmtest.....”
+
+
+
+镜像文件存放路径：\\172.21.92.199\iso
+冉丽那儿还有一部分Linux的镜像文件，后面整理共享
+
+
+
+查看Java环境安装目录
+[root@localhost ~]# which java
+ 
+/usr/bin/java
+ 
+[root@localhost ~]# ls -lrt /usr/bin/java
+ 
+lrwxrwxrwx. 1 root root 22 Aug 17 15:12 /usr/bin/java -> /etc/alternatives/java
+ 
+[root@localhost ~]# ls -lrt /etc/alternatives/java
+ 
+lrwxrwxrwx. 1 root root 46 Aug 17 15:12 /etc/alternatives/java -> /usr/lib/jvm/jre-1.7.0-openjdk.x86_64/bin/java
+
+
+
+
+
+
+
+PDF文档装Word在线工具路径
+https://www.addpdf.cn/
+
+
+
+禅道bug：
+用户自己修改自己的档案之后，用户权限丢失
+
+
+
+服务器yum配置：
+
+网易开源镜像站
+
+[root@localhost yum.repos.d]# cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
+
+[root@localhost yum.repos.d]# wget http://mirrors.163.com/.help/CentOS6-Base-163.repo
+
+[root@localhost yum.repos.d]# yum clean all
+
+[root@localhost yum.repos.d]# yum makecache
+
+类似的也可以采用阿里云
+wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-6.repo
+
+
+
+Linux安装Oracle数据库：
+http://www.linuxidc.com/Linux/2015-02/113222.htm
+https://jingyan.baidu.com/article/63f236282208100208ab3d8a.html?st=3&net_type=2&bd_page_type=1&os=0&showimg=1&rst=6
+Centos安装图形界面命令：yum groupinstall "GNOME Desktop" "Graphical Administration Tools"
+
+
+Centos升级内核，安装docker
+http://www.centoscn.com/image-text/install/2014/1128/4202.html
+
+service docker restart
+docker ps -a | grep "Exited" | awk '{print $1 }'|xargs docker start
+
+
+
+
+
+Windows nginx启动、停止命令： http://blog.csdn.net/ppby2002/article/details/38681345
+
+start nginx
+
+nginx.exe
+
+nginx.exe -s stop
+
+nginx.exe -s quit
+
+Tomcat启动不起来，一闪而过，排查Tomcat启动流程startup->catalina->setclasspath->catalina
+参考https://jingyan.baidu.com/article/546ae18563bacd1149f28cca.html
+
+
+Jenkins自动部署应用的时候：先关闭tomcat，而后部署启动成功，可以访问。但构建job只完成后，tomcat又会自动关闭。
+解决如下：
+在Jenkins执行的脚本前面添加上BUILD_ID=XXXXX，即可
+
+sqlserver数据库学习:
+系统存储过程的概念：
+可提高数据库执行效率
+
+SQL_SERVER 提供系统存储过程，它们是一组预编译的T-SQL语句，系统存储过程提供了管理数据库和更新表的机制，并充当从系统表中检索信息的快捷方式
+
+用户也可自定义存储过程
+
+1、windows上安装sql server
+参考地址：https://jingyan.baidu.com/article/948f592434b407d80ef5f97d.html
+2、配置数据库允许远程访问
+https://jingyan.baidu.com/article/fec4bce226a264f2618d8ba5.html
+3、操作
+
+
+Oracle数据库学习：
+1、使用exp和imp对数据库迁移备份的方法
+参考：http://blog.csdn.net/wei83523408/article/details/51530848
+
+
+亿图图示---基于矢量的绘图工具
+参考：https://jingyan.baidu.com/article/fea4511a1fe94df7ba912561.html
+
+
+
+
+Linux内存使用量查看 free命令详解
+http://www.cnblogs.com/dongzhiquan/p/3789199.html
+total1 = used1 + free1
+
+total1 = used2 + free2
+
+used1 = buffers1 + cached1 + used2
+
+free2 = buffers1 + cached1 + free1
+
+du -sh * 查看目录占用空间大小
+
+操作系统镜像下载地址：
+http://www.jb51.net/LINUXjishu/239493.html
+
+以配置管理为核心的自动化运维系统
+https://sanwen8.cn/p/120wV9r.html
+
+
+gradle学习
+Gitlab
+Gogs
+持续集成
+持续交付
+
+
+for %1 in (%windir%\system32\*.dll) do regsvr32.exe /s %1
+

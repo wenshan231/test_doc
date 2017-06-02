@@ -1,0 +1,60 @@
+     <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.4.11</version>
+                <configuration>
+                    <imageName>htwl_enterprise</imageName>      <!-- 此处最好跟工程名称一致-->
+                    <baseImage>java</baseImage>
+                    <exposes>9030</exposes>                                     <!-- 此处填写工程自己的端口号-->
+                    <entryPoint>["java", "-jar", "${project.build.finalName}.jar"]</entryPoint> 
+					
+                    <resources>
+					   <resource>
+                            <targetPath>/sdk</targetPath>
+                            <directory>sdk/</directory>
+                            <include>*</include>
+                        </resource>
+						<resource>
+                            <targetPath>/sdk/HCNetSDKCom</targetPath>
+                            <directory>sdk/HCNetSDKCom</directory>
+                            <include>*</include>
+                        </resource>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
+
+			
+			                        <plugin>
+                                <groupId>com.spotify</groupId>
+                                <artifactId>docker-maven-plugin</artifactId>
+                                <version>0.4.11</version>
+                                <configuration>
+                                        <imageName>htwl_wljk_video-catch-image</imageName>
+                                        <baseImage>java</baseImage>
+                                        <exposes>9008</exposes>
+                                        <entryPoint>["java", "-jar", "${project.build.finalName}.jar"]</entryPoint>
+                                        <resources>
+                         <resource>
+                            <targetPath>/sdk</targetPath>
+                            <directory>sdk</directory>
+                            <include>*</include>
+                        </resource>
+                        <resource>
+                            <targetPath>/sdk/HCNetSDKCom</targetPath>
+                            <directory>sdk/HCNetSDKCom</directory>
+                            <include>*</include>
+                        </resource>
+                                                <resource>
+                                                        <targetPath>/</targetPath>
+                                                        <directory>${project.build.directory}</directory>
+                                                        <include>${project.build.finalName}.jar</include>
+                                                </resource>
+                                        </resources>
+                                </configuration>
+                        </plugin>
+                </plugins>
