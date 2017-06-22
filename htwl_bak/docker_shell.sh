@@ -13,4 +13,5 @@ else
 fi
 
 
-docker run -d -e TZ="Asia/Shanghai" -v /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime  -p 9603:9603 -P --name htwl_wljk_video-catch-image -h consul-server htwl_wljk_video-catch-image
+docker run -d -e TZ="Asia/Shanghai" -p 9603:9603 -P --name htwl_wljk_video-catch-image -h consul-server htwl_wljk_video-catch-image
+docker run -d -e TZ="Asia/Shanghai" -P --name ${JOB_NAME} -h consul-server ${JOB_NAME}

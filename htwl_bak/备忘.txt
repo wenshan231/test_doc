@@ -1,8 +1,11 @@
+
 主要工作分类
 
 1、服务器信息 SVN：https://10.50.40.38:18000/svn/DOC/10服务器管理/服务器资料.xlsx
 部门相关资料：https://10.50.40.38:18000/svn/DOC
 svn服务器远程登录的时候添加端口61234 SVN目前备份在172.21.92.97 E:\Repositories 上，备份策略为每周六晚0点32分开始全量备份（后面数据量大考虑增加增量备份频率）
+
+SVN 备份在172.21.92.134 D盘
 
 Windows上查看端口是否被占用情况
 netstat -ano |findstr "8089"                        2720
@@ -23,6 +26,8 @@ taskkill /f /t /im Tencentdl.exe
 /opt/zbox/app/zentaopro/backup  备份正常每周六0点开始，还原需要验证
 
 禅道使用流程参考、禅道管理项目学习路径http://www.zentao.net/book/zentaopmshelp/165.html
+项目管理工具Tower参考：https://tower.im/
+
 
 
 3、jenkins：http://172.21.92.97:8080/  admin/123456  
@@ -208,6 +213,27 @@ http://172.21.92.21:32768/v01/htwl/wljk/alarm/desc
 
 http://172.21.92.21:32773/?client_id=e2f1fcf5a3c841498af562564107013e
 
+搭建私有docker镜像仓库
+http://blog.csdn.net/wu_di_xiao_wei/article/details/54755475
+报错解决在Ubuntu中/etc/default/docker 添加 DOCKER_OPTS="--insecure-registry 172.21.92.243:5000"  本地pull的时候也需要添加
+镜像pull到本地之后，采用 docker run -d -e TZ="Asia/Shanghai" -p 9501:9501 --name htwl_area  172.21.92.243:5000/htwl_area  启动
+参考
+docker run -d -p 5000:5000 --restart=always --name registry -v /data/registry:/var/lib/registry 
+查看私有仓库里的镜像
+root@htwl:/etc/default# curl -XGET http://172.21.92.243:5000/v2/_catalog
+{"repositories":["htwl_area","htwl_user"]}
+ curl -XGET http://172.21.92.243:5000/v2/mymirrors/tags/list
+root@htwl:/etc/default# curl -XGET http://172.21.92.243:5000/v2/htwl_user/tags/list
+{"name":"htwl_user","tags":["latest"]}
+
+容器中应用的日志，其生命周期和容器相同。主要要两个去向：标准输出stdout到主机/var/lib/docker/containers//***-json.log文件中，***是应用在容器中的id；写日志到磁盘文件。
+
+
+
+
+
+
+
 
 
 
@@ -357,7 +383,12 @@ free2 = buffers1 + cached1 + free1
 du -sh * 查看目录占用空间大小
 
 操作系统镜像下载地址：
-http://www.jb51.net/LINUXjishu/239493.html
+linux  http://www.jb51.net/LINUXjishu/239493.html
+Windows https://pan.baidu.com/s/1hrNRuks
+
+
+老毛桃 U盘启动盘和重装系统（采用系统ISO文件）
+http://jingyan.baidu.com/article/cbf0e500f4e15b2eaa2893df.html
 
 以配置管理为核心的自动化运维系统
 https://sanwen8.cn/p/120wV9r.html
@@ -368,7 +399,41 @@ Gitlab
 Gogs
 持续集成
 持续交付
+wireshark 网络封包分析软件
+自动化测试工具：单元测试JUnit 接口自动化测试工具   UI自动化测试QTP
+项目管理工具jira
 
 
-for %1 in (%windir%\system32\*.dll) do regsvr32.exe /s %1
+网络性能安全方面：
+有一款“聚生网管”软件（百度搜索自己下载吧），只需要在局域网一台电脑部署之后，就可以实时监控局域网电脑网速，并且可以对上行带宽和下行带宽进行分别
+设置
+
+linux服务器使用iftop查看带宽流量IP
+http://www.cnblogs.com/AloneSword/p/4706032.html
+
+
+搭建高可用mongodb集群
+http://www.lanceyan.com/tech/arch/mongodb_shard1.html
+
+
+plsql 注册码
+Product Code：4t46t6vydkvsxekkvf3fjnpzy5wbuhphqz
+serial Number：601769
+password：xs374ca
+
+
+
+
+
+
+
+
+
+技术服务部禅道使用流程参照《禅道项目管理.pptx》
+具体操作规则：
+1、项目需求确定之后，由产品经理（没有产品经理的由项目经理）梳理需求，分解为独立的功能点；之后创建产品->添加需求->创建项目>关联需求   （注意：需求确定一部分，软件开发进行了就要上禅道，不是等到所有需求确定之后再上禅道）
+2、需求上了禅道项目经理可以先根据需求的优先级或者先后顺序分解为任务，指派给研发人员（注意：指派任务的时候最好先估计一下任务的工作量，为了方便调整，最好分派一到两周的工作量，设置好截止时间）
+3、研发人员领到任务后，最理想状态是根据实际开发进度，及时更新任务状态（开始->日志记录消耗、剩余时间->完成）    研发人员提出能否一周更新一下禅道，那么以周为单位的话
+至少每周一早上研发人员编辑上周的任务状态，项目经理根据任务完成情况分派本周的工作任务
+4、每周一上午10点由质控组人员检查禅道使用规范，并通报项目进度以及使用情况
 
