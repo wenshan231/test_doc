@@ -215,6 +215,12 @@ http://172.21.92.21:32773/?client_id=e2f1fcf5a3c841498af562564107013e
 
 搭建私有docker镜像仓库
 http://blog.csdn.net/wu_di_xiao_wei/article/details/54755475
+sudo docker tag htwl_user 172.21.92.243:5000/htwl_user
+sudo docker push  172.21.92.243:5000/htwl_user
+sudo docker pull  172.21.92.243:5000/htwl_user
+
+export http_proxy="http://39.108.112.173:5000"
+DOCKER_OPTS="--insecure-registry 39.108.112.173:5000"
 报错解决在Ubuntu中/etc/default/docker 添加 DOCKER_OPTS="--insecure-registry 172.21.92.243:5000"  本地pull的时候也需要添加
 镜像pull到本地之后，采用 docker run -d -e TZ="Asia/Shanghai" -p 9501:9501 --name htwl_area  172.21.92.243:5000/htwl_area  启动
 参考
@@ -230,12 +236,25 @@ root@htwl:/etc/default# curl -XGET http://172.21.92.243:5000/v2/htwl_user/tags/l
 
 
 
+export java_home=/usr/lib/jvm/jdk1.8.0_121/
+export mvn_home=/opt/apache-maven-3.3.9
+export PATH=$mvn_home/bin:$java_home/bin:$PATH
+
+mvn install:install-file -Dfile=spring-boot-starter-test-1.3.8.RELEASE.jar -DgroupId=org.springframework.boot -DartifactId=jspring-boot-starter-test -Dversion=5.1.38 -Dpackaging=jar
+
+
+mvn install:install-file -Dfile=jna-examples-1.0.jar -DgroupId=com.sun.jna.examples -DartifactId=jna-examples -Dversion=1.0 -Dpackaging=jar
 
 
 
+mvn install:install-file -Dfile=wljk-core-1.0.jar -DgroupId=org.richard -DartifactId=wljk-core -Dversion=1.0 -Dpackaging=jar
+
+mvn install:install-file -Dfile=htwl-framework-kong-1.0.jar -DgroupId=com.htwl.framework -DartifactId=htwl-framework-kong -Dversion=1.0 -Dpackaging=jar
+
+mvn install:install-file -Dfile=htwl-framework-logs-1.0.jar -DgroupId=com.htwl.framework -DartifactId=htwl-framework-logs -Dversion=1.0 -Dpackaging=jar
 
 
-
+mvn install:install-file -Dfile=htwl-httpclientUtil-3.0-beta-3.0-beta.jar -DgroupId=htwl -DartifactId=htwl-httpclientUtil-3.0-beta -Dversion=3.0-beta -Dpackaging=jar
 
 
 参考：
@@ -436,4 +455,35 @@ password：xs374ca
 3、研发人员领到任务后，最理想状态是根据实际开发进度，及时更新任务状态（开始->日志记录消耗、剩余时间->完成）    研发人员提出能否一周更新一下禅道，那么以周为单位的话
 至少每周一早上研发人员编辑上周的任务状态，项目经理根据任务完成情况分派本周的工作任务
 4、每周一上午10点由质控组人员检查禅道使用规范，并通报项目进度以及使用情况
+
+
+
+
+scp -r /home/htwl/work/htwl-data-store htwl@39.108.112.173:/home/htwl/work
+
+
+http://maven.outofmemory.cn/org.springframework.boot/spring-boot-starter-test/1.3.8.RELEASE/spring-boot-starter-test-1.3.8.RELEASE.jar
+
+
+
+修改服务后触发阿里云在线环境构建
+1、首先确保测试环境的代码已经更新，可以在http://172.21.92.97:8080/view/docker/和
+http://172.21.92.97:8080/view/wljk2/下查看是否更新了代码
+
+2、触发http://172.21.92.97:8080/view/aliyun/job/copy_code/
+参数填写镜像名称，或者是http://172.21.92.97:8080/view/aliyun/下job对应名称去掉_aliyun后缀
+3、触发http://172.21.92.97:8080/view/aliyun/下需要重新构建的服务
+
+
+root@iZwz90r88kfl51z5cubvnoZ:/var/run/docker/libcontainerd/containerd# docker restart htwl_timetask_wljk 
+Error response from daemon: Cannot restart container htwl_timetask_wljk: mkdir /var/run/docker/libcontainerd/containerd/b1de54223f5bdc40a45fc6e8fabae97be86a72d9412fd03b41f1b9665dd1461d: file exists
+
+
+
+service docker restart
+docker ps -a | grep "Exited" | awk '{print $1 }'|xargs docker start
+
+
+service docker restart
+docker ps -a | awk '{print $1 }'|xargs docker restart
 
